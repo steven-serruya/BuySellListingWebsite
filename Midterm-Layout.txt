@@ -1,0 +1,88 @@
+
+
+1. **Project Setup:**
+   - Initialize a Node.js project using `npm init`.
+   - Install necessary dependencies like Express, PostgreSQL (`pg-promise` for database interaction), and any chosen CSS/UI frameworks.
+   - Set up your project directory structure.
+
+2. **Database Setup:**
+   - Set up a PostgreSQL database to store user data, items, and messages.
+   - Create tables for users, items, messages, etc.
+
+3. **Server and Routing:**
+   - Create an Express server to handle HTTP requests and responses.
+   - Implement RESTful routes for user authentication, item management, and messaging.
+
+4. **User Authentication:** 
+(app.get('/login', (req, res) => {
+  res.render('login');
+});)
+
+   - Implement user registration and login functionality.
+   - Use sessions or JWT for user authentication and authorization.
+
+5. **Main Feed and Filtering:**
+   - Fetch featured items from the database to display on the main feed.
+   - Implement filtering options for users to sort items by price or other criteria.
+
+6. **Favorites:**
+   - Allow users to mark items as favorites.
+   - Implement a mechanism to store and retrieve user's favorite items.
+
+7. **Messaging System:**
+   - Implement a messaging system that allows users to send messages to sellers.
+   - Store messages in the database, associating them with the relevant item and users.
+
+8. **Admin Functionality:**
+   - Implement admin features like posting items, removing items, marking items as sold.
+   - Secure admin functionality to ensure only authorized users can access these features.
+
+9. **Styling:**
+   - Use your chosen CSS/UI framework or custom styling with CSS preprocessor.
+   - Create a responsive design to ensure a good user experience across devices.
+
+10. **Testing and Debugging:**
+    - Test your app thoroughly, including both frontend and backend components.
+    - Use tools like Postman for API testing and debugging.
+
+11. **Version Control:**
+    - Set up a Git repository for version control.
+    - Commit your code regularly and use meaningful commit messages.
+
+12. **Deployment:**
+    - Deploy your application to a hosting platform like Heroku or AWS.
+    - Set up a production-ready database.
+
+13. **Notifications:**
+    - Implement a notification system for sending messages via app, email, or text as per negotiation updates.
+
+
+Markdown
+- app
+  - public
+    - css
+      - styles.css
+  - views
+    - layout.ejs
+    
+    - index.ejs
+    - login.ejs
+  - server.js
+
+
+server.js:
+const express = require('express');
+const app = express();
+const PORT = process.env.PORT;
+
+Features
+-Main feed with featured items
+-filter for prices
+-make favorite to check later
+-buyers can send message to seller
+Admins can:
+post items- main feed
+-remove items belonging to him
+-mark items as sold -belonging to him
+-send message via app, email or text for negociations
+
