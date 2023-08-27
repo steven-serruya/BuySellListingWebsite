@@ -1,0 +1,24 @@
+add a carousell for items
+https://getbootstrap.com/docs/4.3/components/carousel/
+
+
+alerts for messaging
+https://getbootstrap.com/docs/4.3/components/alerts/
+
+maybe an accordeon for quicxk item descritpion 
+https://getbootstrap.com/docs/5.3/components/accordion/
+
+
+badges beside new items 
+if timestamps < 72h
+https://getbootstrap.com/docs/4.3/components/badge/
+
+buttons for buy/sell/message
+https://getbootstrap.com/docs/5.3/components/buttons/
+
+
+cards for the items
+https://getbootstrap.com/docs/5.3/components/card/
+
+navbar
+https://getbootstrap.com/docs/5.3/components/navbar/

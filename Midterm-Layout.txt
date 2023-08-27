@@ -77,7 +77,7 @@ const PORT = process.env.PORT;
 
 Features
 -Main feed with featured items
--filter for prices
+-filter for prices...or other filters
 -make favorite to check later
 -buyers can send message to seller
 Admins can:
@@ -86,3 +86,398 @@ post items- main feed
 -mark items as sold -belonging to him
 -send message via app, email or text for negociations
 
+
+how many ejs views do we need:
+
+
+Layouts:
+layout.ejs: This is the main layout template that holds the common structure for all pages. It includes the HTML structure, head section, navigation bar, and body content. Every other view will extend or include this layout.
+
+Pages:
+
+index.ejs: The main page where users can see featured items and navigate to item details.
+login.ejs: The login page where users can log in.
+register.ejs: The registration page for new users.
+item.ejs: The item details page.
+admin.ejs: The admin panel page.
+
+Partial Views (Reusable Components):
+navbar.ejs: The navigation bar.
+itemCard.ejs: The card component displaying item information.
+
+(Backend):**
+
+**1. Set up the server (server.js) and basic routing:**
+   - Create `server.js` and set up the Express server.
+   - Define the necessary routes for different pages and actions.
+   - Ensure your server is running correctly and handling basic requests.
+
+**2. Implement RESTful routes for items and admin functionality:**
+   - Define RESTful routes for listing items, viewing item details, and admin actions like adding/removing items.
+   - Implement corresponding route handlers in `server.js`.
+   - Test the routes using tools like Postman.
+
+**3. Implement the database interactions for items:**
+   - Work with Classmate 2 to understand the database schema and interactions.
+   - Implement functions to interact with the database to retrieve and update item information.
+   - Ensure proper error handling and validation.
+
+**4. Work on user authentication:**
+   - Set up user authentication routes (login, logout, register).
+   - Implement the logic for user login and registration, even if it's basic for this project.
+   - Store user authentication status, possibly using session or JWT.
+
+   ***************(Database):******************
+
+**1. Set up the PostgreSQL database and schema:**
+   - Install PostgreSQL and set up a database for your project.
+   - Define the necessary tables (e.g., items, users) and relationships.
+   - Ensure proper data types and constraints are set.
+
+**2. Implement the database interactions using pg-promise:**
+   - Install the `pg-promise` library to interact with the PostgreSQL database.
+   - Write functions to perform CRUD operations for items and users.
+   - Test these functions to ensure they work correctly.
+
+**3. Handle messages and messaging system:**
+   - Define the structure of the messages table and its relationships.
+   - Implement functions to manage sending and receiving messages.
+   - Ensure that messages are associated with the correct users and items.
+
+   (Frontend):**
+
+**1. Design the UI using Bootstrap:**
+   - Familiarize yourself with Bootstrap's documentation to understand its components and classes.
+   - Sketch out the design of the main feed, item details, and admin panel pages.
+   - Use Bootstrap classes to structure your pages, create responsive layouts, and style elements.
+
+**2. Implement the index.ejs and item.ejs pages:**
+   - Set up the basic structure of `index.ejs` and `item.ejs` pages.
+   - Integrate Bootstrap classes for styling and layout.
+   - For `index.ejs`, loop through the featured items and dynamically generate the item cards.
+   - For `item.ejs`, display the details of a selected item.
+
+**3. Create reusable partial views if needed:**
+   - Identify components that appear on multiple pages (e.g., navigation bar, item cards).
+   - Create separate EJS files for these components (e.g., `navbar.ejs`, `itemCard.ejs`).
+   - Include these partial views in the relevant pages to maintain consistency.
+
+
+
+
+
+DATABASE step by step :
+
+Step 1: Set up the PostgreSQL Database and Schema
+
+
+- Create a Database: CREATE DATABASE buy_sell_db;
+
+- Define Tables Create a users table and an items table :
+
+-- schema.sql
+
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE items (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
+    seller_id INTEGER REFERENCES users(id)
+);
+
+CREATE TABLE messages (
+    id SERIAL PRIMARY KEY,
+    sender_id INTEGER REFERENCES users(id),
+    receiver_id INTEGER REFERENCES users(id),
+    item_id INTEGER REFERENCES items(id),
+    content TEXT,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+Seed the Database:
+
+In the db directory, create a file named seeds.sql to populate your database with initial data (if needed):
+-- seeds.sql
+
+INSERT INTO users (username, email) VALUES ('john_doe', 'john@example.com');
+INSERT INTO items (name, price, seller_id) VALUES ('Shoes', 50.00, 1);
+-- Add more seed data as needed
+
+Step 2: Implement Database Interactions and Message Handling
+ 
+ 
+ 
+ **Connection Setup:
+
+
+In the db directory, create a file named connection.js to set up the database connection:
+
+// connection.js
+
+const { Pool } = require('pg');
+require('dotenv').config();
+
+const pool = new Pool({
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    database: process.env.DB_NAME,
+    password: process.env.DB_PASS,
+    port: process.env.DB_PORT,
+});
+
+module.exports = pool;
+
+**db intereactions
+
+In the db directory, create a file named queries.js to define your database interaction functions:
+
+// queries.js
+
+const db = require('./connection');
+
+const db = require('./connection'); // Adjust path accordingly
+
+const createUser = (username, email) => {
+    return db.query('INSERT INTO users(username, email) VALUES($1, $2) RETURNING id;', [username, email])
+        .then(data => {
+            return data.rows[0].id;
+        })
+        .catch(error => {
+            throw error;
+        });
+};
+
+const createItem = (name, price, sellerId) => {
+    return db.query('INSERT INTO items(name, price, seller_id) VALUES($1, $2, $3) RETURNING id;', [name, price, sellerId])
+        .then(data => {
+            return data.rows[0].id;
+        })
+        .catch(error => {
+            throw error;
+        });
+};
+
+const getUsers = () => {
+    return db.query('SELECT * FROM users;')
+        .then(data => {
+            return data.rows;
+        })
+        .catch(error => {
+            throw error;
+        });
+};
+
+const getItems = () => {
+    return db.query('SELECT * FROM items;')
+        .then(data => {
+            return data.rows;
+        })
+        .catch(error => {
+            throw error;
+        });
+};
+
+const getItemById = (itemId) => {
+    return db.query('SELECT * FROM items WHERE id = $1;', [itemId])
+        .then(data => {
+            return data.rows[0];
+        })
+        .catch(error => {
+            throw error;
+        });
+};
+
+const removeItem = (itemId) => {
+    return db.query('DELETE FROM items WHERE id = $1;', [itemId])
+        .catch(error => {
+            throw error;
+        });
+};
+
+module.exports = {
+    createUser,
+    createItem,
+    getUsers,
+    getItems,
+    getItemById,
+    removeItem
+};
+
+
+***Message Handling:
+
+In the db directory, create a file named messages.js to define message-related functions:
+
+// messages.js
+
+const db = require('./connection');
+
+function createMessage(senderId, receiverId, itemId, content) {
+    const query = {
+        text: 'INSERT INTO messages(sender_id, receiver_id, item_id, content) VALUES($1, $2, $3, $4)',
+        values: [senderId, receiverId, itemId, content]
+    };
+    
+    return db.query(query)
+        .catch(error => {
+            throw error;
+        });
+}
+
+function getMessagesForItem(itemId) {
+    const query = {
+        text: 'SELECT * FROM messages WHERE item_id = $1 ORDER BY timestamp ASC',
+        values: [itemId]
+    };
+    
+    return db.query(query)
+        .then(result => result.rows)
+        .catch(error => {
+            throw error;
+        });
+}
+
+// Implement other message-related functions as needed
+
+module.exports = {
+    createMessage,
+    getMessagesForItem,
+    // Implement other functions here
+};
+
+ 
+ *** Integrate in Routes
+
+In your routes directory, you can integrate the database interactions and message handling functions into your route files (users-api.js, users.js, widgets-api.js, etc.). Use the functions defined in queries.js and messages.js to interact with the database and handle messages within your routes.
+
+Remember to adjust the paths based on your project's actual directory structure. This organization keeps your code modular and maintainable.
+
+If you have any further questions or need assistance with integrating these components into your specific routes, feel free to ask!
+
+
+*********************************backend***********************************************
+
+Step 1: Set up the Server and Basic Routing
+
+Create server.js and Set Up Express Server:
+
+
+In your project root, create a file named server.js. Import Express, initialize the server, and set it to listen on a specific port
+
+const express = require('express');
+const app = express();
+const PORT = process.env.PORT;
+
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
+
+
+Define Basic Routes:
+
+Set up a basic route to verify that your server is working. Add this code to server.js:
+
+app.get('/', (req, res) => {
+    res.send('Welcome to the Buy/Sell Listing App!');
+});
+
+
+Step 2: Implement RESTful Routes for Items and Admin Functionality
+
+Define Routes for Listing Items:
+
+Let's say you want to list all items and view item details. Add these routes to server.js:
+
+// List all items
+app.get('/items', (req, res) => {
+    // Implement logic to fetch items from the database
+    // and send them as JSON response
+});
+
+// View item details
+app.get('/items/:id', (req, res) => {
+    const itemId = req.params.id;
+    // Implement logic to fetch item details by itemId
+    // and send them as JSON response
+});
+
+Implement Admin Routes for Adding/Removing Items:
+
+// Add item (Admin)
+app.post('/items', (req, res) => {
+    // Implement logic to add a new item to the database
+});
+
+// Remove item (Admin)
+app.delete('/items/:id', (req, res) => {
+    const itemId = req.params.id;
+    // Implement logic to remove item by itemId from the database
+});
+
+
+Step 3: Implement Database Interactions for Items
+In a separate file (e.g., queries.js in the db directory), implement functions to interact with the database:
+
+const db = require('./db/connection'); // Adjust path accordingly
+
+async function getAllItems() {
+    // Implement logic to fetch all items from the database
+    // and return the result
+}
+
+async function getItemById(itemId) {
+    // Implement logic to fetch item by itemId from the database
+    // and return the result
+}
+
+async function addItem(name, price, sellerId) {
+    // Implement logic to add a new item to the database
+}
+
+async function removeItem(itemId) {
+    // Implement logic to remove item by itemId from the database
+}
+
+module.exports = {
+    getAllItems,
+    getItemById,
+    addItem,
+    removeItem
+};
+
+
+Step 4: Handle Auto-Login and User State
+
+
+// Register user
+app.post('/register', (req, res) => {
+    // Implement logic for user registration
+});
+
+// User login
+app.post('/login', (req, res) => {
+    // Implement logic for user login
+});
+
+// User logout
+app.post('/logout', (req, res) => {
+    // Implement logic for user logout
+});
+
+Since authentication is handled automatically and user states are stored in cookies, you can have a middleware that checks the user's authentication status 
+and attaches the user information to the request object. For example, if your cookies contain a user token:
+
+// Middleware to handle auto-login
+app.use((req, res, next) => {
+    const userToken = req.cookies.userToken; // Adjust this to match your cookie name
+    if (userToken) {
+        // Implement logic to decode userToken and fetch user data
+        req.user = { id: decodedUserId, username: decodedUsername }; // Attach user info to the request
+    }
+    next();
+});
