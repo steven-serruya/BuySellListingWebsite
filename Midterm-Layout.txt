@@ -134,8 +134,8 @@ itemCard.ejs: The card component displaying item information.
    - Define the necessary tables (e.g., items, users) and relationships.
    - Ensure proper data types and constraints are set.
 
-**2. Implement the database interactions using pg-promise:**
-   - Install the `pg-promise` library to interact with the PostgreSQL database.
+**2. Implement the database interactions using pg**
+   - Install the `pg` library to interact with the PostgreSQL database.
    - Write functions to perform CRUD operations for items and users.
    - Test these functions to ensure they work correctly.
 
