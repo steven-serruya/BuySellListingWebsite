@@ -125,7 +125,7 @@ itemCard.ejs: The card component displaying item information.
 **4. Work on user authentication:**
    - Set up user authentication routes (login, logout, register).
    - Implement the logic for user login and registration, even if it's basic for this project.
-   - Store user authentication status, possibly using session or JWT.
+   - Store user authentication status, possibly using session or cookies
 
    ***************(Database):******************
 
@@ -180,7 +180,9 @@ Step 1: Set up the PostgreSQL Database and Schema
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username VARCHAR(50) NOT NULL,
-    email VARCHAR(100) NOT NULL
+    email VARCHAR(100) NOT NULL,
+    firstname VARCHAR(100),
+    lastname VARCHAR(100)
 );
 
 CREATE TABLE items (
@@ -425,22 +427,32 @@ In a separate file (e.g., queries.js in the db directory), implement functions t
 
 const db = require('./db/connection'); // Adjust path accordingly
 
-async function getAllItems() {
-    // Implement logic to fetch all items from the database
-    // and return the result
+function getAllItems() {
+    return new Promise((resolve, reject) => {
+        // Implement logic to fetch all items from the database
+        // and resolve with the result or reject with an error
+    });
 }
 
-async function getItemById(itemId) {
-    // Implement logic to fetch item by itemId from the database
-    // and return the result
+function getItemById(itemId) {
+    return new Promise((resolve, reject) => {
+        // Implement logic to fetch item by itemId from the database
+        // and resolve with the result or reject with an error
+    });
 }
 
-async function addItem(name, price, sellerId) {
-    // Implement logic to add a new item to the database
+function addItem(name, price, sellerId) {
+    return new Promise((resolve, reject) => {
+        // Implement logic to add a new item to the database
+        // and resolve with the result or reject with an error
+    });
 }
 
-async function removeItem(itemId) {
-    // Implement logic to remove item by itemId from the database
+function removeItem(itemId) {
+    return new Promise((resolve, reject) => {
+        // Implement logic to remove item by itemId from the database
+        // and resolve with the result or reject with an error
+    });
 }
 
 module.exports = {
@@ -449,6 +461,7 @@ module.exports = {
     addItem,
     removeItem
 };
+
 
 
 Step 4: Handle Auto-Login and User State
