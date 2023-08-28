@@ -1,14 +1,6 @@
 const db = require('../connection');
 
-const createUser = (username, email) => {
-  return db.query('INSERT INTO users(username, email) VALUES($1, $2) RETURNING id;', [username, email])
-    .then(data => {
-      return data.rows[0].id;
-    })
-    .catch(error => {
-      throw error;
-    });
-};
+
 
 const createItem = (name, price, sellerId) => {
   return db.query('INSERT INTO items(name, price, seller_id) VALUES($1, $2, $3) RETURNING id;', [name, price, sellerId])
@@ -20,10 +12,10 @@ const createItem = (name, price, sellerId) => {
     });
 };
 
-const getUsers = () => {
-  return db.query('SELECT * FROM users;')
+const getUserById = (id) => {
+  return db.query('SELECT * FROM users WHERE id = $1;', [Id])
     .then(data => {
-      return data.rows;
+      return data.rows[0];
     })
     .catch(error => {
       throw error;
@@ -58,9 +50,9 @@ const removeItem = (itemId) => {
 };
 
 module.exports = {
-  createUser,
+
   createItem,
-  getUsers,
+  getUserById,
   getItems,
   getItemById,
   removeItem

@@ -5,6 +5,7 @@ require('dotenv').config();
 const sassMiddleware = require('./lib/sass-middleware');
 const express = require('express');
 const morgan = require('morgan');
+const dbQueries = require('./db/queries/queries'); // Import your dbQueries module
 
 const PORT = process.env.PORT || 8080;
 const app = express();
@@ -48,6 +49,19 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
+app.get('/listings', (req, res) => {
+  dbQueries.getItems() // Fetch items from the database using your queries module
+    .then(items => {
+      res.render('listings', { items }); // Render the 'listings.ejs' template with data
+    })
+    .catch(error => {
+      console.error('Error fetching items:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
+
+
