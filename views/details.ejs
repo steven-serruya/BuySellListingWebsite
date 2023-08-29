@@ -22,10 +22,38 @@
     <div class="card bg-dark text-white">
       <img src="/<%= item.picurl %>" class="card-img" alt="...">
       <div class="card-img-overlay">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content.
-          This content is a little bit longer.</p>
+        <h5 class="card-title">
+          <%= item.name %>
+        </h5>
+        <p class="card-text">
+          <%= item.description %>
+        </p>
         <p class="card-text">Last updated 3 mins ago</p>
+      </div>
+    </div>
+
+    <div class="card text-center">
+      <div class="card-header">
+        <ul class="nav nav-pills card-header-pills">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Active</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+          </li>
+        </ul>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">
+          <%= item.name %>
+        </h5>
+        <p class="card-text">
+          <%= item.description %>
+        </p>
+        <a href="#" class="btn btn-primary">Buy</a>
       </div>
     </div>
 
