@@ -46,8 +46,35 @@ app.use('/users', usersRoutes);
 // Separate them into separate routes files (see above).
 
 app.get('/', (req, res) => {
-  res.render('index');
+  dbQueries.getItems(6) // Fetch items from the database using your queries module
+    .then(items => {
+      res.render('index.ejs', { items }); // Pass the items data to the EJS template
+    })
+    .catch(error => {
+      console.error('Error fetching items:', error);
+      res.status(500).send('Internal Server Error');
+    });
+
 });
+
+app.get('/details/:id', (req, res) => {
+  const itemId = parseInt(req.params.id); // Get the item id from the URL parameter
+
+  dbQueries.getItemById(itemId) // Fetch item details by id from the database using your queries module
+    .then(item => {
+      if (!item) {
+        return res.status(404).send('Item not found');
+      }
+      console.log("item++++:", item);
+      res.render('details.ejs', { item }); // Pass the item data to the EJS template
+    })
+    .catch(error => {
+      console.error('Error fetching item details:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
+
+
 
 app.get('/listings', (req, res) => {
   dbQueries.getItems() // Fetch items from the database using your queries module

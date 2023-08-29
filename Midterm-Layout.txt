@@ -80,7 +80,7 @@ Features
 -filter for prices...or other filters
 -make favorite to check later
 -buyers can send message to seller
-Admins can:
+logged in  can:
 post items- main feed
 -remove items belonging to him
 -mark items as sold -belonging to him

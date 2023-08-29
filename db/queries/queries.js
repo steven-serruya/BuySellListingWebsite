@@ -22,8 +22,8 @@ const getUserById = (id) => {
     });
 };
 
-const getItems = () => {
-  return db.query('SELECT * FROM items;')
+const getItems = (limit = 20) => {
+  return db.query(`SELECT * FROM items LIMIT ${limit};`)
     .then(data => {
       return data.rows;
     })

@@ -2,7 +2,7 @@
 DROP TABLE IF EXISTS messages CASCADE;
 DROP TABLE IF EXISTS items CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
-
+DROP TABLE IF EXISTS favorite_items CASCADE;
 -- Create users table
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
@@ -18,8 +18,10 @@ CREATE TABLE items (
     name VARCHAR(100) NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
     picurl VARCHAR(255),
-    seller_id INTEGER REFERENCES users(id)
+    seller_id INTEGER REFERENCES users(id),
+    description TEXT -- Add the description column
 );
+
 
 -- Create messages table
 CREATE TABLE messages (
@@ -29,4 +31,10 @@ CREATE TABLE messages (
     item_id INTEGER REFERENCES items(id),
     content TEXT,
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE favorite_items (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id),
+    item_id INTEGER REFERENCES items(id)
 );

@@ -27,17 +27,15 @@
                 <p class="card-text">
                   <%= item.description %>
                 </p>
-                <p class="card-text">$<%= item.price %>
+                <p class="card-text"><strong>$<%= item.price %></strong></p> <!-- Price in bold -->
                 </p>
-                <a href="#" class="btn btn-primary">Buy</a>
+                <a href="/details/<%= item.id %>" class="btn btn-primary">More details</a>
               </div>
             </div>
           </div>
           <% }); %>
       </div>
-      <div class="text-center mt-4" id="load-more-wrapper" style="display: none;">
-        <button id="load-more" class="btn btn-primary">Show More</button>
-      </div>
+
 
     </div>
 
