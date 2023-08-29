@@ -1,7 +1,9 @@
 const express = require('express');
-const app = express();
+const router  = express.Router();
+const dbQueries = require('../db/queries/queries'); // Import your dbQueries module
 
-app.get('/listings', (req, res) => {
+router.get('/', (req, res) => {
+  console.log("Troubleshooting", req);
   dbQueries.getItems() // Fetch items from the database using your queries module
     .then(items => {
       res.render('listings', { items }); // Render the 'listings.ejs' template with data
@@ -11,7 +13,5 @@ app.get('/listings', (req, res) => {
       res.status(500).send('Internal Server Error');
     });
 });
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+
+module.exports = router;
