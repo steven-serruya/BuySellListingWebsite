@@ -6,7 +6,7 @@
   <body>
     <!-- NAV BAR-->
 
-    <% include navbar %>
+    <% include navbarNL %>
 
 
       <!-- Carousel-->
@@ -71,7 +71,7 @@
                   <a href="/details/<%= item.id %>" class="btn btn-primary">More details</a>
                 </div>
                 <div class="heart-icon">
-                  <i class="fa-regular fa-heart"></i>
+                  <i class="fa-solid fa-heart"></i>
                 </div>
               </div>
             </div>
@@ -84,6 +84,15 @@
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
         crossorigin="anonymous"></script>
+      <script>
+        const heartIcons = document.querySelectorAll('.heart-icon');
+
+        heartIcons.forEach(icon => {
+          icon.addEventListener('click', () => {
+            icon.classList.toggle('red-heart'); // Toggle the 'red-heart' class
+          });
+        });
+      </script>
   </body>
 
 </html>

@@ -75,9 +75,8 @@ app.get('/details/:id', (req, res) => {
 });
 
 
-
 app.get('/listings', (req, res) => {
-  dbQueries.getItems() // Fetch items from the database using your queries module
+  dbQueries.getItems(12) // Fetch the first 12 items from the database using your queries module
     .then(items => {
       res.render('listings', { items }); // Render the 'listings.ejs' template with data
     })
@@ -86,6 +85,20 @@ app.get('/listings', (req, res) => {
       res.status(500).send('Internal Server Error');
     });
 });
+
+// Add a new route for loading all items
+app.get('/listings/all', (req, res) => {
+  dbQueries.getItems(20) // Fetch the first 12 items from the database using your queries module
+    .then(items => {
+      res.render('listingsAll', { items }); // Render the 'listingsAll.ejs' template with data
+    })
+    .catch(error => {
+      console.error('Error fetching items:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
+
+
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);

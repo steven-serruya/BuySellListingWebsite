@@ -13,5 +13,13 @@ html {
   justify-content: flex-end;
   padding: 5px;
   margin-right: 5px;
+  cursor: pointer;
+  /* Add a pointer cursor to indicate it's clickable */
 
+}
+
+.red-heart {
+  color: red;
+  fill: red;
+  /* Change the SVG fill color to red */
 }
