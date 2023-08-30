@@ -49,9 +49,11 @@ app.use('/login', login);
 // Separate them into separate routes files (see above).
 
 app.get('/', (req, res) => {
+  //get the user from session
+  const user = req.session.user || null;
   dbQueries.getItems(6) // Fetch items from the database using your queries module
     .then(items => {
-      res.render('index.ejs', { items }); // Pass the items data to the EJS template
+      res.render('index.ejs', { items, user }); // Pass the items data to the EJS template
     })
     .catch(error => {
       console.error('Error fetching items:', error);

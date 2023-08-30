@@ -6,8 +6,8 @@ const bcrypt = require("bcryptjs");
 
 const salt = '$2a$10$ypcYB8tsCLku1VIJeQvG.O';
 
-router.get('/', (req, res) => {
-  res.render('login.ejs');
+router.get('/', (req, res,) => {
+  res.render('login.ejs', { user: null });
 });
 
 router.post('/', (req, res) => {
@@ -35,7 +35,7 @@ router.post('/', (req, res) => {
     })
     .then((user) => {
       if (user) {
-        req.session.userId = user.id.toString();
+        req.session.user = user;
         res.redirect('/');
       }
       res.render('login.ejs');
