@@ -20,7 +20,8 @@ CREATE TABLE items (
     price DECIMAL(10, 2) NOT NULL,
     picurl VARCHAR(255),
     seller_id INTEGER REFERENCES users(id),
-    description TEXT -- Add the description column
+    description TEXT, -- Add the description column
+    detailed_description TEXT
 );
 
 

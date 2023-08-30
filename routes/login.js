@@ -6,18 +6,15 @@ const bcrypt = require("bcryptjs");
 
 //const salt = '$2a$10$ypcYB8tsCLku1VIJeQvG.O';
 
-router.get('/', (req, res) => {
-  const templateVars = {
-    user: req.session
-  };
-  res.render('login.ejs', templateVars);
+router.get('/', (req, res,) => {
+  res.render('login.ejs', { user: null });
 });
 
 router.post('/', (req, res) => {
   const email = req.body.email;
   const values = [email];
   db.query(`
-  SELECT id, username, password
+  SELECT id, password, email, username
   FROM users
   WHERE email = $1;
   `, values)
@@ -37,10 +34,7 @@ router.post('/', (req, res) => {
     })
     .then((user) => {
       if (user) {
-        req.session = {
-          id: user.id.toString(),
-          username: user.username
-        };
+        req.session.user = user;
         res.redirect('/');
       }
       res.render('login.ejs');
