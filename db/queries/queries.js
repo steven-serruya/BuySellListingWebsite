@@ -2,8 +2,8 @@ const db = require('../connection');
 
 
 
-const createItem = (name, price, sellerId) => {
-  return db.query('INSERT INTO items(name, price, seller_id) VALUES($1, $2, $3) RETURNING id;', [name, price, sellerId])
+const createItem = (name, price, picurl, sellerId) => {
+  return db.query('INSERT INTO items(name, price, picurl, seller_id) VALUES($1, $2, $3, $4) RETURNING id;', [name, price, picurl, sellerId])
     .then(data => {
       return data.rows[0].id;
     })
