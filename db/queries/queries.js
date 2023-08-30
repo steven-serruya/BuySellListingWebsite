@@ -13,7 +13,7 @@ const createItem = (name, price, sellerId) => {
 };
 
 const getUserById = (id) => {
-  return db.query('SELECT * FROM users WHERE id = $1;', [Id])
+  return db.query('SELECT * FROM users WHERE id = $1;', [id])
     .then(data => {
       return data.rows[0];
     })
@@ -44,6 +44,19 @@ const getItemById = (itemId) => {
 
 const removeItem = (itemId) => {
   return db.query('DELETE FROM items WHERE id = $1;', [itemId])
+    .then(data => {
+      return data.rows[0];
+    })
+    .catch(error => {
+      throw error;
+    });
+};
+
+const getEmailById = (id) => {
+  return db.query(`SELECT email FROM users WHERE id = $1;`, [id])
+    .then(data => {
+      return data.rows[0];
+    })
     .catch(error => {
       throw error;
     });
@@ -55,5 +68,6 @@ module.exports = {
   getUserById,
   getItems,
   getItemById,
-  removeItem
+  removeItem,
+  getEmailById
 };
