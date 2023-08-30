@@ -36,18 +36,12 @@ app.use(cookieSession({
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
-const userApiRoutes = require('./routes/users-api');
-const widgetApiRoutes = require('./routes/widgets-api');
-const usersRoutes = require('./routes/users');
 
 const login = require('./routes/login');
 const logout = require('./routes/logout');
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
-app.use('/api/users', userApiRoutes);
-app.use('/api/widgets', widgetApiRoutes);
-app.use('/users', usersRoutes);
 
 app.use('/login', login);
 app.use('/logout', logout);
@@ -64,7 +58,6 @@ app.get('/', (req, res) => {
         user: req.session,
         items
       };
-      console.log('template', templateVars.user.id);
       res.render('index.ejs', templateVars); // Pass the items data to the EJS template
     })
     .catch(error => {
