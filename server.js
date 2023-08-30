@@ -6,9 +6,11 @@ const sassMiddleware = require('./lib/sass-middleware');
 const express = require('express');
 const morgan = require('morgan');
 const dbQueries = require('./db/queries/queries'); // Import your dbQueries module
+const cookieSession = require('cookie-session');
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8060;
 const app = express();
+const login = require('./routes/login');
 
 app.set('view engine', 'ejs');
 
@@ -26,19 +28,20 @@ app.use(
   })
 );
 app.use(express.static('public'));
-
+app.use(cookieSession({
+  name: "session",
+  keys: ["fghujkahjksflkj"],
+  maxAge: 24 * 60 * 60 * 1000
+}));
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
-const userApiRoutes = require('./routes/users-api');
-const widgetApiRoutes = require('./routes/widgets-api');
-const usersRoutes = require('./routes/users');
+
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
-app.use('/api/users', userApiRoutes);
-app.use('/api/widgets', widgetApiRoutes);
-app.use('/users', usersRoutes);
+app.use('/login', login);
+
 // Note: mount other resources here, using the same pattern above
 
 // Home page

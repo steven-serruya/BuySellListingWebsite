@@ -9,7 +9,8 @@ CREATE TABLE users (
     username VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL,
     firstname VARCHAR(100),
-    lastname VARCHAR(100)
+    lastname VARCHAR(100),
+    password VARCHAR(255) NOT NULL
 );
 
 -- Create items table
