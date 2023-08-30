@@ -9,7 +9,8 @@ CREATE TABLE users (
     username VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL,
     firstname VARCHAR(100),
-    lastname VARCHAR(100)
+    lastname VARCHAR(100),
+    password VARCHAR(255) NOT NULL
 );
 
 -- Create items table
@@ -19,7 +20,8 @@ CREATE TABLE items (
     price DECIMAL(10, 2) NOT NULL,
     picurl VARCHAR(255),
     seller_id INTEGER REFERENCES users(id),
-    description TEXT -- Add the description column
+    description TEXT, -- Add the description column
+    detailed_description TEXT
 );
 
 

@@ -1,91 +1,102 @@
 <!doctype html>
 <html lang="en">
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Greg's List</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-</head>
+<% include head %>
 
-<body>
-  <!-- NAV BAR-->
+  <body>
+    <!-- Check if the user is logged in -->
+    <% if (user) { %>
+      <% include navbarLI %>
+        <% } else { %>
+          <% include navbarNL %>
+            <% } %>
 
-  <% include navbar %>
-
-
-    <!-- Carousel-->
-    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        <div class="carousel-item active" data-bs-interval="600">
-          <img src="images/01_laptop_1500.jpg" class="d-block w-100" alt="laptop">
-        </div>
-        <div class="carousel-item">
-          <img src="images/10_camera_1500.jpg" class="d-block w-100" alt="...">
-        </div>
-        <div class="carousel-item">
-          <img src="images/17_vacuumCleaner_1500.jpg" class="d-block w-100" alt="...">
-        </div>
-        <div class="carousel-item">
-          <img src="images/12_smartWatch_1500.jpg" class="d-block w-100" alt="...">
-        </div>
-        <div class="carousel-item">
-          <img src="images/07_wirelessEarbuds_1500.jpg" class="d-block w-100" alt="...">
-        </div>
-      </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
-        data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying"
-        data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
-    </div>
-    <!--Main COntainer-->
-    <div class="w-100 bg-dark-subtle p-5 mt-5">
-      <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat doloremque velit quam delectus quae possimus
-        natus nihil est dolorum blanditiis odio tempore totam incidunt praesentium neque quaerat cupiditate earum hic
-        corrupti, quia mollitia unde quo. Nihil laudantium obcaecati veniam tempora debitis saepe distinctio error
-        accusamus, eligendi sit, sed mollitia perferendis?
-      </p>
-    </div>
-    <h1 class="text-center p-5 mb-5 mt-5">Featured Listings</h1>
-
-
-    <div class="container">
-      <div class="row">
-        <% items.forEach(item=> { %>
-          <div class="col-sm-6 mb-3 mb-sm-0">
-            <div class="card">
-              <img src="<%= item.picurl %>" class="card-img-top" alt="<%= item.name %>">
-
-              <div class="card-body">
-                <h5 class="card-title">
-                  <%= item.name %>
-                </h5>
-                <p class="card-text">
-                  <%= item.description %>
-                </p>
-                </p>
-                <p class="card-text"><strong>$<%= item.price %></strong></p> <!-- Price in bold -->
-                </p>
-                <a href="/details/<%= item.id %>" class="btn btn-primary">More details</a>
+              <!-- Carousel-->
+              <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                  <div class="carousel-item active" data-bs-interval="600">
+                    <img src="images/01_laptop_1500.jpg" class="d-block w-100" alt="laptop">
+                  </div>
+                  <div class="carousel-item">
+                    <img src="images/10_camera_1500.jpg" class="d-block w-100" alt="...">
+                  </div>
+                  <div class="carousel-item">
+                    <img src="images/17_vacuumCleaner_1500.jpg" class="d-block w-100" alt="...">
+                  </div>
+                  <div class="carousel-item">
+                    <img src="images/12_smartWatch_1500.jpg" class="d-block w-100" alt="...">
+                  </div>
+                  <div class="carousel-item">
+                    <img src="images/07_wirelessEarbuds_1500.jpg" class="d-block w-100" alt="...">
+                  </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
+                  data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying"
+                  data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
               </div>
-            </div>
-          </div>
-          <% }); %>
-      </div>
-    </div>
+              <!--Main COntainer-->
+              <div class="w-100 bg-dark-subtle p-5 mt-5">
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat doloremque velit quam delectus quae
+                  possimus
+                  natus nihil est dolorum blanditiis odio tempore totam incidunt praesentium neque quaerat cupiditate
+                  earum hic
+                  corrupti, quia mollitia unde quo. Nihil laudantium obcaecati veniam tempora debitis saepe distinctio
+                  error
+                  accusamus, eligendi sit, sed mollitia perferendis?
+                </p>
+              </div>
+              <h1 class="text-center p-5 mb-5 mt-5">Featured Listings</h1>
 
 
-    <!-- Include your JavaScript links here -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-      crossorigin="anonymous"></script>
-</body>
+              <div class="container">
+                <div class="row">
+                  <% items.forEach(item=> { %>
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                      <div class="card">
+                        <img src="<%= item.picurl %>" class="card-img-top" alt="<%= item.name %>">
+
+                        <div class="card-body">
+                          <h5 class="card-title">
+                            <%= item.name %>
+                          </h5>
+                          <p class="card-text">
+                            <%= item.description %>
+                          </p>
+                          </p>
+                          <p class="card-text"><strong>$<%= item.price %></strong></p> <!-- Price in bold -->
+                          </p>
+                          <a href="/details/<%= item.id %>" class="btn btn-primary">More details</a>
+                        </div>
+                        <div class="heart-icon">
+                          <i class="fa-solid fa-heart"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <% }); %>
+                </div>
+              </div>
+
+
+              <!-- Include your JavaScript links here -->
+              <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+                crossorigin="anonymous"></script>
+              <script>
+                const heartIcons = document.querySelectorAll('.heart-icon');
+
+                heartIcons.forEach(icon => {
+                  icon.addEventListener('click', () => {
+                    icon.classList.toggle('red-heart'); // Toggle the 'red-heart' class
+                  });
+                });
+              </script>
+  </body>
 
 </html>
