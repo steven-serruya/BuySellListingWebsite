@@ -3,21 +3,14 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db/connection');
 const bcrypt = require("bcryptjs");
-const cookieSession = require('cookie-session');
 
-router.use(cookieSession({
-  name: "session",
-  keys: ["fghujkahjksflkj"],
-  maxAge: 24 * 60 * 60 * 1000
-}));
-const salt = bcrypt.genSaltSync(10);
+const salt = '$2a$10$ypcYB8tsCLku1VIJeQvG.O';
 
 router.get('/', (req, res) => {
   res.render('login.ejs');
 });
 
 router.post('/', (req, res) => {
-  console.log("Params", req.body);
   const email = req.body.email;
   const values = [email];
   db.query(`
@@ -26,16 +19,28 @@ router.post('/', (req, res) => {
   WHERE email = $1
   `, values)
     .then(res => {
-      // console.log('inner password', !bcrypt.compareSync(req.body.password, res.rows[1]));
-      // if (!bcrypt.compareSync(req.body.password, res.rows[1])) {
-      //   console.log("Wrong password");
-      // }
+      if (!res.rows[0]) {
+        console.log("Wrong email");
+        return;
+      }
 
-      // req.session.userId = res.rows[0];
-      // res.redirect('/');
-    });
+      const user = res.rows[0];
+      console.log(user);
 
-  res.render('login.ejs');
+      if (!bcrypt.compareSync(req.body.password, user.password)) {
+        console.log("wrong password");
+        return;
+      }
+      return user;
+    })
+    .then((user) => {
+      if (user) {
+        req.session.userId = user.id.toString();
+        res.redirect('/');
+      }
+      res.render('login.ejs');
+    })
+    .catch(err => console.error('query error', err.stack));
 });
 
 module.exports = router;
