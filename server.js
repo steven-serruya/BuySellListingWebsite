@@ -88,7 +88,7 @@ app.get('/listings', (req, res) => {
     .then(items => {
       const user = req.session.user || null; // Get the user from session
 
-      res.render('listings', { items }); // Render the 'listings.ejs' template with data
+      res.render('listings', { items, user }); // Render the 'listings.ejs' template with data
     })
     .catch(error => {
       console.error('Error fetching items:', error);

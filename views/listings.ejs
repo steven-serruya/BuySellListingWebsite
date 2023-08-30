@@ -4,8 +4,11 @@
 <% include head %>
 
   <body>
-    <!-- Include your navbar here -->
-    <% include navbarNL %>
+    <% if (user) { %>
+      <% include navbarLI %>
+        <% } else { %>
+          <% include navbarNL %>
+            <% } %>
 
       <div class="container">
         <h1 class="text-center p-5 mb-5 mt-5">Full Listing</h1>
