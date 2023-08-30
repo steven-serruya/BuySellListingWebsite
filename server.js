@@ -58,7 +58,12 @@ app.use('/login', login);
 app.get('/', (req, res) => {
   dbQueries.getItems(6) // Fetch items from the database using your queries module
     .then(items => {
-      res.render('index.ejs', { items }); // Pass the items data to the EJS template
+      const templateVars = {
+        user: req.session,
+        items
+      };
+      console.log('template', templateVars.user.id);
+      res.render('index.ejs', templateVars); // Pass the items data to the EJS template
     })
     .catch(error => {
       console.error('Error fetching items:', error);
@@ -76,7 +81,11 @@ app.get('/details/:id', (req, res) => {
         return res.status(404).send('Item not found');
       }
       console.log("item++++:", item);
-      res.render('details.ejs', { item }); // Pass the item data to the EJS template
+      const templateVars = {
+        user: req.session,
+        items
+      };
+      res.render('details.ejs', templateVars); // Pass the item data to the EJS template
     })
     .catch(error => {
       console.error('Error fetching item details:', error);
@@ -89,7 +98,11 @@ app.get('/details/:id', (req, res) => {
 app.get('/listings', (req, res) => {
   dbQueries.getItems() // Fetch items from the database using your queries module
     .then(items => {
-      res.render('listings', { items }); // Render the 'listings.ejs' template with data
+      const templateVars = {
+        user: req.session,
+        items
+      };
+      res.render('listings', templateVars); // Render the 'listings.ejs' template with data
     })
     .catch(error => {
       console.error('Error fetching items:', error);

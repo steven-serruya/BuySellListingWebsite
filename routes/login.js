@@ -4,19 +4,22 @@ const router = express.Router();
 const db = require('../db/connection');
 const bcrypt = require("bcryptjs");
 
-const salt = '$2a$10$ypcYB8tsCLku1VIJeQvG.O';
+//const salt = '$2a$10$ypcYB8tsCLku1VIJeQvG.O';
 
 router.get('/', (req, res) => {
-  res.render('login.ejs');
+  const templateVars = {
+    user: req.session
+  };
+  res.render('login.ejs', templateVars);
 });
 
 router.post('/', (req, res) => {
   const email = req.body.email;
   const values = [email];
   db.query(`
-  SELECT id, password
+  SELECT id, username, password
   FROM users
-  WHERE email = $1
+  WHERE email = $1;
   `, values)
     .then(res => {
       if (!res.rows[0]) {
@@ -25,7 +28,6 @@ router.post('/', (req, res) => {
       }
 
       const user = res.rows[0];
-      console.log(user);
 
       if (!bcrypt.compareSync(req.body.password, user.password)) {
         console.log("wrong password");
@@ -35,7 +37,10 @@ router.post('/', (req, res) => {
     })
     .then((user) => {
       if (user) {
-        req.session.userId = user.id.toString();
+        req.session = {
+          id: user.id.toString(),
+          username: user.username
+        };
         res.redirect('/');
       }
       res.render('login.ejs');
