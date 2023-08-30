@@ -14,7 +14,7 @@ router.post('/', (req, res) => {
   const email = req.body.email;
   const values = [email];
   db.query(`
-  SELECT id, password
+  SELECT id, password, email, username
   FROM users
   WHERE email = $1
   `, values)

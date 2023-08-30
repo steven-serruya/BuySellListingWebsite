@@ -53,7 +53,9 @@ app.get('/', (req, res) => {
   const user = req.session.user || null;
   dbQueries.getItems(6) // Fetch items from the database using your queries module
     .then(items => {
+      console.log("user+++", user);
       res.render('index.ejs', { items, user }); // Pass the items data to the EJS template
+
     })
     .catch(error => {
       console.error('Error fetching items:', error);
@@ -66,6 +68,7 @@ app.get('/details/:id', (req, res) => {
   const itemId = parseInt(req.params.id); // Get the item id from the URL parameter
 
   dbQueries.getItemById(itemId) // Fetch item details by id from the database using your queries module
+
     .then(item => {
       if (!item) {
         return res.status(404).send('Item not found');
@@ -83,6 +86,8 @@ app.get('/details/:id', (req, res) => {
 app.get('/listings', (req, res) => {
   dbQueries.getItems(12) // Fetch the first 12 items from the database using your queries module
     .then(items => {
+      const user = req.session.user || null; // Get the user from session
+
       res.render('listings', { items }); // Render the 'listings.ejs' template with data
     })
     .catch(error => {
@@ -95,6 +100,8 @@ app.get('/listings', (req, res) => {
 app.get('/listings/all', (req, res) => {
   dbQueries.getItems(20) // Fetch the first 12 items from the database using your queries module
     .then(items => {
+      const user = req.session.user || null; // Get the user from session
+
       res.render('listingsAll', { items }); // Render the 'listingsAll.ejs' template with data
     })
     .catch(error => {
