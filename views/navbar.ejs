@@ -24,6 +24,11 @@
           <li class="nav-item">
             <a class="nav-link" href="#">Logged in as: <%= user.username %></a>
           </li>
+          <li class="nav-item">
+            <form action="/logout" method="post">
+              <button type="submit" class="btn btn-outline-*">Logout</button>
+            </form>
+          </li>
           <% } else { %>
             <li class="nav-item">
               <a class="nav-link" href="./login">Login</a>
