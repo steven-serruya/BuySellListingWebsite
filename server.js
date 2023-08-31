@@ -106,6 +106,7 @@ app.get('/listings', (req, res) => {
 app.get('/listings/all', (req, res) => {
   dbQueries.getItems(30) // Fetch the first 12 items from the database using your queries module
     .then(items => {
+      console.log('items++++', items);
       const user = req.session.user || null; // Get the user from session
 
       res.render('listingsAll', { items, user }); // Render the 'listingsAll.ejs' template with data
@@ -159,11 +160,10 @@ app.get('/delete/:itemId', (req, res) => {
 
   const itemId = req.params.itemId;
 
-  // Assuming you have a database function to remove an item by its ID
-  // Replace 'removeItemById' with the actual function to remove the item
+
   dbQueries.removeItemById(itemId)
     .then(() => {
-      res.redirect('/listings'); // Redirect back to the listings page after successful removal
+      res.redirect('/listings/all'); // Redirect back to the listings page after successful removal
     })
     .catch(error => {
       console.error('Error removing item:', error);
@@ -179,6 +179,111 @@ app.get('/logout', (req, res) => {
   // Redirect to the homepage or login page
   res.redirect('/');
 });
+app.get('/edit/:itemId', (req, res) => {
+  const user = req.session.user || null;
+  if (!user) {
+    return res.redirect('/login'); // Redirect to login if user is not logged in
+  }
+  const itemId = req.params.itemId;
+  dbQueries.getItemById(itemId)
+    .then((item) => {
+      res.render(`editform`, { item, user }); // Redirect to the item details page after editing
+    })
+    .catch(error => {
+      console.error('Error updating item:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
+app.post('/edit/:itemId', (req, res) => {
+  const user = req.session.user || null;
+
+  if (!user) {
+    return res.redirect('/login'); // Redirect to login if user is not logged in
+  }
+  // console.log(req.body);
+  const itemId = req.params.itemId;
+  const name = req.body.itemName;
+  const price = req.body.price;
+  const description = req.body.description;
+  const picUrl = req.body.picUrl;
+
+  // Update the item's details in the database using your database functions
+  dbQueries.updateItem(itemId, { name, price, description, picUrl })
+    .then(() => {
+      res.redirect(`/listings/all`); // Redirect to the item details page after editing
+    })
+    .catch(error => {
+      console.error('Error updating item:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
+
+// In your server.js or routes file
+app.get('/favorites', (req, res) => {
+  // Assuming you have the appropriate logic for user authentication
+  const user = req.session.user || null;
+
+  if (!user) {
+    // If user is not logged in, you might want to redirect them to the login page
+    return res.redirect('/login'); // Replace '/login' with your actual login route
+  }
+
+  // Here, you need to fetch the user's favorite items from the database
+  // and pass them to the EJS template
+  // You can use your database queries module or functions for this
+  // Example:
+  dbQueries.getFavoriteItems(user.id)
+    .then(favoriteItems => {
+      res.render('favorites.ejs', { user, favoriteItems });
+    })
+    .catch(error => {
+      console.error('Error fetching favorite items:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
+
+app.post('/add-favorite/:itemId', (req, res) => {
+  const userId = req.session.user.id;
+  const itemId = req.params.itemId;
+
+  // Add the item to the user's favorites in the database
+  dbQueries.addFavorite(userId, itemId)
+    .then(() => {
+
+      res.redirect('/listings/all'); // Redirect back to the favorites page after adding to favorites
+    })
+    .catch(error => {
+      console.error('Error adding favorite item:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
+
+// Assuming you have a module for database queries named dbQueries
+app.post('/remove-favorite/:itemId', (req, res) => {
+  const user = req.session.user;
+
+  if (!user) {
+    return res.redirect('/login');
+  }
+
+  const itemId = req.params.itemId;
+  const userId = user.id;
+  console.log("itemid++++++", itemId);
+  console.log("userId++++++++", userId);
+  // Call a function to remove the favorite item from the database
+  dbQueries.removeFavorite(userId, itemId)
+
+    .then(() => {
+
+      res.redirect('/favorites'); // Redirect back to the favorites page after removing
+    })
+    .catch(error => {
+      console.error('Error removing favorite item:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
+
+
 
 
 app.listen(PORT, () => {
