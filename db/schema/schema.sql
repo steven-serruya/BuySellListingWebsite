@@ -21,7 +21,8 @@ CREATE TABLE items (
     picurl VARCHAR(255),
     seller_id INTEGER REFERENCES users(id),
     description TEXT, -- Add the description column
-    detailed_description TEXT
+    detailed_description TEXT,
+    sold BOOLEAN DEFAULT FALSE
 );
 
 

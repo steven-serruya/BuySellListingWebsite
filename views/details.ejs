@@ -1,85 +1,114 @@
 <!doctype html>
 <html lang="en">
 
-<% include head %>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Greg's List</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link rel="stylesheet" href="../styles/layout.css" />
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script type="text/javascript" src="/scripts/app.js"></script>
+</head>
 
 
-  <body>
-    <!-- NAV BAR-->
+<body>
+  <!-- NAV BAR-->
 
-    <% include navbarNL %>
-
-
-      <!-- Carousel-->
-
-
-      <!--Main COntainer-->
-      <div class="card bg-dark text-white">
-        <img src="/<%= item.picurl %>" class="card-img" alt="...">
-        <div class="card-img-overlay" style="bottom: 0;">
-          <h5 class="card-title">
-            <span style="font-weight: bold; color: rgb(255, 255, 255); font-size: 46px;">
-              <%= item.name %>
-            </span>
-          </h5>
-          <p class="card-text">
-            <span style="font-weight: bold; color: rgb(255, 252, 252); font-size: 36px;">
-              <%= item.description %>
-            </span>
-          </p>
-
-        </div>
-      </div>
+  <% if (user) { %>
+    <% include navbarLI %>
+      <% } else { %>
+        <% include navbarNL %>
+          <% } %>
 
 
+            <!-- Carousel-->
 
 
+            <!--Main COntainer-->
+            <div class="card bg-dark text-white">
+              <img src="/<%= item.picurl %>" class="card-img" alt="...">
+              <div class="card-img-overlay" style="bottom: 0;">
+                <% if(item.sold) { %>
+                  <div style="position: relative; left: 0; top: 0;">
+                    <img src="https://i.pinimg.com/474x/a0/46/3f/a0463fb83fab0c14f37b61527c744b9b.jpg" class="img-sold">
+                  </div>
+                  <% } %>
+                    <h5 class="card-title">
+                      <span style="font-weight: bold; color: rgb(255, 255, 255); font-size: 46px;">
+                        <%= item.name %>
+                      </span>
+                    </h5>
+                    <p class="card-text">
+                      <span style="font-weight: bold; color: rgb(255, 252, 252); font-size: 36px;">
+                        <%= item.description %>
+                      </span>
+                    </p>
 
-      <div class="card text-center">
-        <div class="card-header">
-          Featured
-        </div>
-        <div class="card-body">
-          <h5 class="card-title" style="font-size: 32px; font-weight: bold;">
-            <%= item.name %>
-          </h5>
-          <p class="card-text" style="font-size: 24px; font-weight: bold;">
-            $<%= item.price %>
-          </p>
-          <p class="card-text" style="font-size: 20px;">
-            <%= item.detailed_description %>
-          </p>
-          <a href="#" class="btn btn-primary">Buy</a>
-        </div>
-        <div class="card-footer text-muted">
-          2 days ago
-        </div>
-        <div class="heart-icon" id="heart-icon-<%= item.id %>">
-          <i class="fa-solid fa-heart"></i>
-        </div>
-      </div>
+              </div>
+            </div>
 
 
 
 
 
+            <div class="card text-center">
+              <div class="card-header">
+                Featured
+              </div>
+              <div class="card-body">
+                <h5 class="card-title" style="font-size: 32px; font-weight: bold;">
+                  <%= item.name %>
+                </h5>
+                <p class="card-text" style="font-size: 24px; font-weight: bold;">
+                  $<%= item.price %>
+                </p>
+                <p class="card-text" style="font-size: 20px;">
+                  <%= item.detailed_description %>
+                </p>
+                <% if(!item.sold) { %>
+                  <p class="card-text">
+                    <a href="#" class="btn btn-primary">Buy</a>
+                  </p>
+                  <% if(user.id) { %>
+                    <form id="item-sold" action="/itemSold/<%= item.id %>" method="post">
+                      <button type="submit" class="btn btn-success">Mark as sold</button>
+                    </form>
+                    <% } %>
+                      <% } %>
+              </div>
+              <div class="card-footer text-muted">
+                2 days ago
+              </div>
+              <div class="heart-icon" id="heart-icon-<%= item.id %>">
+                <i class="fa-solid fa-heart"></i>
+              </div>
+            </div>
 
-      <!-- Include your JavaScript links here -->
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-        crossorigin="anonymous"></script>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-        crossorigin="anonymous"></script>
-      <script>
-        const heartIcons = document.querySelectorAll('.heart-icon');
 
-        heartIcons.forEach(icon => {
-          icon.addEventListener('click', () => {
-            icon.classList.toggle('red-heart'); // Toggle the 'red-heart' class
-          });
-        });
-      </script>
-  </body>
+
+
+
+
+            <!-- Include your JavaScript links here -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+              integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+              crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+              integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+              crossorigin="anonymous"></script>
+            <script>
+              const heartIcons = document.querySelectorAll('.heart-icon');
+
+              heartIcons.forEach(icon => {
+                icon.addEventListener('click', () => {
+                  icon.classList.toggle('red-heart'); // Toggle the 'red-heart' class
+                });
+              });
+            </script>
+</body>
 
 </html>

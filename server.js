@@ -12,6 +12,7 @@ const PORT = process.env.PORT || 8060;
 const app = express();
 const login = require('./routes/login');
 const logout = require('./routes/logout');
+const itemSold = require('./routes/itemSold');
 
 app.set('view engine', 'ejs');
 
@@ -43,6 +44,7 @@ app.use(cookieSession({
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
 app.use('/login', login);
 app.use('/logout', logout);
+app.use('/itemSold', itemSold);
 
 // Note: mount other resources here, using the same pattern above
 
@@ -55,7 +57,6 @@ app.get('/', (req, res) => {
   const user = req.session.user || null;
   dbQueries.getItems(6) // Fetch items from the database using your queries module
     .then(items => {
-      console.log("user+++", user);
       res.render('index.ejs', { items, user }); // Pass the items data to the EJS template
 
     })
@@ -75,12 +76,9 @@ app.get('/details/:id', (req, res) => {
       if (!item) {
         return res.status(404).send('Item not found');
       }
-      console.log("item++++:", item);
-      const templateVars = {
-        user: req.session,
-        items
-      };
-      res.render('details.ejs', templateVars); // Pass the item data to the EJS template
+      const user = req.session.user || null;
+      console.log(item.sold);
+      res.render('details.ejs', { item, user }); // Pass the item data to the EJS template
     })
     .catch(error => {
       console.error('Error fetching item details:', error);
@@ -108,7 +106,7 @@ app.get('/listings/all', (req, res) => {
     .then(items => {
       const user = req.session.user || null; // Get the user from session
 
-      res.render('listingsAll', { items }); // Render the 'listingsAll.ejs' template with data
+      res.render('listingsAll', { items, user }); // Render the 'listingsAll.ejs' template with data
     })
     .catch(error => {
       console.error('Error fetching items:', error);
