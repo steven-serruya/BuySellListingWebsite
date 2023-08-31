@@ -101,6 +101,7 @@ app.get('/listings', (req, res) => {
 app.get('/listings/all', (req, res) => {
   dbQueries.getItems(30) // Fetch the first 12 items from the database using your queries module
     .then(items => {
+      console.log('items++++', items);
       const user = req.session.user || null; // Get the user from session
 
       res.render('listingsAll', { items, user }); // Render the 'listingsAll.ejs' template with data
@@ -210,6 +211,74 @@ app.post('/edit/:itemId', (req, res) => {
       res.status(500).send('Internal Server Error');
     });
 });
+
+// In your server.js or routes file
+app.get('/favorites', (req, res) => {
+  // Assuming you have the appropriate logic for user authentication
+  const user = req.session.user || null;
+
+  if (!user) {
+    // If user is not logged in, you might want to redirect them to the login page
+    return res.redirect('/login'); // Replace '/login' with your actual login route
+  }
+
+  // Here, you need to fetch the user's favorite items from the database
+  // and pass them to the EJS template
+  // You can use your database queries module or functions for this
+  // Example:
+  dbQueries.getFavoriteItems(user.id)
+    .then(favoriteItems => {
+      console.log("favorite+++", favoriteItems);
+      res.render('favorites.ejs', { user, favoriteItems });
+    })
+    .catch(error => {
+      console.error('Error fetching favorite items:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
+
+app.post('/add-favorite/:itemId', (req, res) => {
+  console.log("++++++++++");
+  const userId = req.session.user.id;
+  const itemId = req.params.itemId;
+
+  // Add the item to the user's favorites in the database
+  dbQueries.addFavorite(userId, itemId)
+    .then(() => {
+
+      res.redirect('/listings/all'); // Redirect back to the favorites page after adding to favorites
+    })
+    .catch(error => {
+      console.error('Error adding favorite item:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
+
+// Assuming you have a module for database queries named dbQueries
+app.post('/remove-favorite/:itemId', (req, res) => {
+  const user = req.session.user;
+
+  if (!user) {
+    return res.redirect('/login');
+  }
+
+  const itemId = req.params.itemId;
+  const userId = user.id;
+  console.log("itemid++++++", itemId);
+  console.log("userId++++++++", userId);
+  // Call a function to remove the favorite item from the database
+  dbQueries.removeFavorite(userId, itemId)
+
+    .then(() => {
+
+      res.redirect('/favorites'); // Redirect back to the favorites page after removing
+    })
+    .catch(error => {
+      console.error('Error removing favorite item:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
+
 
 
 
