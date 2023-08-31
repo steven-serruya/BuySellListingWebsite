@@ -77,7 +77,6 @@ app.get('/details/:id', (req, res) => {
         return res.status(404).send('Item not found');
       }
       const user = req.session.user || null;
-      console.log(item.sold);
       res.render('details.ejs', { item, user }); // Pass the item data to the EJS template
     })
     .catch(error => {

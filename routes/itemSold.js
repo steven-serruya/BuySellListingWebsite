@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../db/connection');
+const { getItemById } = require('../db/queries/queries');
 
 
 router.post('/', (req, res) => {
@@ -11,6 +12,9 @@ router.post('/', (req, res) => {
   SET sold = TRUE
   WHERE id = $1;
   `, values)
+    .then(() => {
+      res.status(201).send();
+    })
     .catch(err => console.error('query error', err.stack));
 });
 

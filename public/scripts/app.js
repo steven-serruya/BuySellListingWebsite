@@ -13,9 +13,12 @@ $(document).ready(function() {
       type: 'POST',
       url: '/itemSold',
       data: { itemId },
-      success: () => {
-
+      success: function() {
+        setTimeout(() => {
+          location.reload();
+        }, 1000);
       }
     });
   });
+
 });
