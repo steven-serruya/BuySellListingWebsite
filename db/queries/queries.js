@@ -2,8 +2,8 @@ const db = require('../connection');
 
 
 
-const createItem = (name, price, sellerId) => {
-  return db.query('INSERT INTO items(name, price, seller_id) VALUES($1, $2, $3) RETURNING id;', [name, price, sellerId])
+const createItem = (name, price, picurl, seller_id, description, detailed_description) => {
+  return db.query('INSERT INTO items(name, price, picurl, seller_id, description, detailed_description) VALUES($1, $2, $3, $4, $5, $6) RETURNING id;', [name, price, picurl, seller_id, description, detailed_description])
     .then(data => {
       return data.rows[0].id;
     })
@@ -43,7 +43,7 @@ const getItemById = (itemId) => {
     });
 };
 
-const removeItem = (itemId) => {
+const removeItemById = (itemId) => {
   return db.query('DELETE FROM items WHERE id = $1;', [itemId])
     .catch(error => {
       throw error;
@@ -95,7 +95,7 @@ module.exports = {
   getUserById,
   getItems,
   getItemById,
-  removeItem,
+  removeItemById,
   getFavorite,
   addFavorite,
   removeFavorite

@@ -36,9 +36,11 @@
                           <p class="card-text"><strong>$<%= item.price %></strong></p> <!-- Price in bold -->
                           <a href="/details/<%= item.id %>" class="btn btn-primary">More details</a>
                           <!-- Use dynamic link to details page -->
-                          <div class="heart-icon" id="heart-icon-<%= item.id %>">
-                            <i class="fa-solid fa-heart"></i>
-                          </div>
+                          <% if (user) { %>
+                            <div class="heart-icon" id="heart-icon-<%= item.id %>">
+                              <i class="fa-solid fa-heart"></i>
+                            </div>
+                            <% } %>
                         </div>
                       </div>
                     </div>
