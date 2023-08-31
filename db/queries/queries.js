@@ -21,8 +21,9 @@ const getUserById = (id) => {
       throw error;
     });
 };
+
 const getItems = (limit) => {
-  return db.query(`SELECT * FROM items LIMIT ${limit};`)
+  return db.query(`select items.*, favorite_items.id as favorite_id from items left join favorite_items on items.id = item_id LIMIT ${limit};`)
     .then(data => {
       return data.rows;
     })
@@ -41,6 +42,8 @@ const getItemById = (itemId) => {
       throw error;
     });
 };
+
+
 const updateItem = (itemId, updates) => {
   const updateColumns = Object.keys(updates).map((key, index) => `${key} = $${index + 2}`).join(', ');
   const values = [itemId, ...Object.values(updates)];
@@ -68,13 +71,14 @@ const removeItemById = (itemId) => {
 };
 
 // Get favorite item
-function getFavorite(userId, itemId) {
+function getFavoriteItems(userId) {
   return new Promise((resolve, reject) => {
-    pool.query('SELECT * FROM favorite_items WHERE user_id = $1 AND item_id = $2', [userId, itemId], (error, result) => {
+    db.query('SELECT * FROM items JOIN favorite_items ON items.id = item_id WHERE user_id = $1', [userId], (error, result) => {
       if (error) {
         reject(error);
       } else {
-        resolve(result.rows[0]);
+        console.log(result.rows);
+        resolve(result.rows);
       }
     });
   });
@@ -83,7 +87,7 @@ function getFavorite(userId, itemId) {
 // Add item to favorites
 function addFavorite(userId, itemId) {
   return new Promise((resolve, reject) => {
-    pool.query('INSERT INTO favorite_items (user_id, item_id) VALUES ($1, $2)', [userId, itemId], (error, result) => {
+    db.query('INSERT INTO favorite_items (user_id, item_id) VALUES ($1, $2)', [userId, itemId], (error, result) => {
       if (error) {
         reject(error);
       } else {
@@ -95,8 +99,11 @@ function addFavorite(userId, itemId) {
 
 // Remove item from favorites
 function removeFavorite(userId, itemId) {
+  console.log("userId------", userId);
+  console.log("itemId------", itemId);
   return new Promise((resolve, reject) => {
-    pool.query('DELETE FROM favorite_items WHERE user_id = $1 AND item_id = $2', [userId, itemId], (error, result) => {
+    db.query('DELETE FROM favorite_items WHERE user_id = $1 AND item_id = $2', [userId, itemId], (error, result) => {
+      console.log("results------", result);
       if (error) {
         reject(error);
       } else {
@@ -112,7 +119,7 @@ module.exports = {
   getItems,
   getItemById,
   removeItemById,
-  getFavorite,
+  getFavoriteItems,
   addFavorite,
   removeFavorite,
   updateItem

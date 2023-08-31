@@ -75,10 +75,37 @@
                           <a href="/details/<%= item.id %>" class="btn btn-primary">More details</a>
                         </div>
                         <% if (user) { %>
-                          <div class="heart-icon" id="heart-icon-<%= item.id %>">
-                            <i class="fa-solid fa-heart"></i>
-                          </div>
-                          <% } %>
+                          <!---if item is favorite-->
+
+
+                          <% if (item.favorite_id) { %>
+                            <form action="/remove-favorite/<%= item.id %>" method="POST">
+                              <button type="submit">
+
+                                <div class="heart-icon red-heart" id="heart-icon-<%= item.id %>">
+                                  <i class="fa-solid fa-heart"></i>
+                                </div>
+
+                              </button>
+
+                            </form>
+                            <% } %>
+                              <!---if item is not favorite-->
+                              <% if (!item.favorite_id) { %>
+
+                                <form action="/add-favorite/<%= item.id %>" method="POST">
+                                  <button type="submit">
+
+                                    <div class="heart-icon" id="heart-icon-<%= item.id %>">
+                                      <i class="fa-solid fa-heart"></i>
+                                    </div>
+
+                                  </button>
+
+                                </form>
+                                <% } %>
+
+                                  <% } %>
                       </div>
                     </div>
                     <% }); %>
