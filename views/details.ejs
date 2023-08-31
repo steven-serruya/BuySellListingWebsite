@@ -79,7 +79,7 @@
                     </form>
                     <% } %>
                       <% } %>
-                        <% if(user.id==item.seller_id && item.sold) { %>
+                        <% if((user.id==item.seller_id || user.admin==true)&& item.sold) { %>
                           <form id="item-available" action="/itemInStock/<%= item.id %>" method="post">
                             <button type="submit" class="btn btn-success">Mark as Available</button>
                           </form>
