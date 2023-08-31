@@ -53,10 +53,13 @@ app.use('/logout', logout);
 // Separated Routes for each Resource
 const listings = require('./routes/listings');
 const listingDetails = require('./routes/details');
+const contact = require('./routes/contact');
 
 // Mount the resource routes
 app.use('/listings', listings);
+app.use('/listings/all', listings);
 app.use('/:id', listingDetails);
+app.use('/message', contact);
 
 app.get('/', (req, res) => {
   //get the user from session
@@ -72,53 +75,6 @@ app.get('/', (req, res) => {
       res.status(500).send('Internal Server Error');
     });
 
-});
-
-app.get('/details/:id', (req, res) => {
-  const itemId = parseInt(req.params.id); // Get the item id from the URL parameter
-  const user = req.session.user || null;
-
-  dbQueries.getItemById(itemId) // Fetch item details by id from the database using your queries module
-
-    .then(item => {
-      if (!item) {
-        return res.status(404).send('Item not found');
-      }
-      console.log("item++++:", item);
-      res.render('details.ejs', { item, user }); // Pass the item data to the EJS template
-    })
-    .catch(error => {
-      console.error('Error fetching item details:', error);
-      res.status(500).send('Internal Server Error');
-    });
-});
-
-
-app.get('/listings', (req, res) => {
-  dbQueries.getItems(12) // Fetch the first 12 items from the database using your queries module
-    .then(items => {
-      const user = req.session.user || null; // Get the user from session
-
-      res.render('listings', { items, user, user }); // Render the 'listings.ejs' template with data
-    })
-    .catch(error => {
-      console.error('Error fetching items:', error);
-      res.status(500).send('Internal Server Error');
-    });
-});
-
-// Add a new route for loading all items
-app.get('/listings/all', (req, res) => {
-  dbQueries.getItems(30) // Fetch the first 12 items from the database using your queries module
-    .then(items => {
-      const user = req.session.user || null; // Get the user from session
-
-      res.render('listingsAll', { items, user }); // Render the 'listingsAll.ejs' template with data
-    })
-    .catch(error => {
-      console.error('Error fetching items:', error);
-      res.status(500).send('Internal Server Error');
-    });
 });
 
 app.get('/sell', (req, res) => {

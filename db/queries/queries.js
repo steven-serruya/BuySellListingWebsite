@@ -32,7 +32,6 @@ const getItems = (limit) => {
 };
 
 
-
 const getItemById = (itemId) => {
   return db.query('SELECT * FROM items WHERE id = $1;', [itemId])
     .then(data => {
@@ -60,16 +59,6 @@ const updateItem = (itemId, updates) => {
 
 const removeItemById = (itemId) => {
   return db.query('DELETE FROM items WHERE id = $1;', [itemId])
-    .then(data => {
-      return data.rows[0];
-    })
-    .catch(error => {
-      throw error;
-    });
-};
-
-const getEmailById = (id) => {
-  return db.query(`SELECT email FROM users WHERE id = $1;`, [id])
     .then(data => {
       return data.rows[0];
     })
@@ -126,6 +115,5 @@ module.exports = {
   getFavorite,
   addFavorite,
   removeFavorite,
-  getEmailById,
   updateItem
 };
