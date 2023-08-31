@@ -66,8 +66,9 @@
                     <a href="/edit/<%= item.id %>" class="d-inline">
                       <button type="button" class="btn btn-warning">Edit</button>
                     </a>
-
-
+                    <form action="/" method="POST" style="padding: 10px 0 0 10px;">
+                      <a href="mailto:<%= email %>?&subject=Product%20Enquiry&body=Hello%20I'm%20Interested%20in%20<%= item.name %>">Send Email</a>
+                    </form>
                   </div>
                   <% } %>
                     <div class="card-footer text-muted">
