@@ -10,7 +10,6 @@
           <% include navbarNL %>
             <% } %>
 
-
               <div class="container">
                 <h1 class="text-center p-5 mb-5 mt-5">Full Listing</h1>
                 <div class="row">
@@ -18,6 +17,15 @@
                     <div class="col-sm-3 mb-3 mb-sm-5">
                       <div class="card" style="width: 18rem;">
                         <img src="<%= item.picurl %>" class="card-img-top" alt="<%= item.name %>">
+
+                        <div class="card-img-overlay" style="bottom: 230px; padding: 0px;">
+                          <% if(item.sold) { %>
+                            <div style="position: relative; left: 0; top: 0;">
+                              <img src="images/sold_out_sticker.png" class="img-sold-card">
+                            </div>
+                            <% } %>
+                        </div>
+
                         <div class="card-body">
                           <h5 class="card-title">
                             <%= item.name %>

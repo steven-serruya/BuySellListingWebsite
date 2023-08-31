@@ -1,124 +1,132 @@
 <!doctype html>
 <html lang="en">
 
-<% include head %>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Greg's List</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link rel="stylesheet" href="../styles/layout.css" />
 
-  <body>
-    <!-- NAV BAR-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script type="text/javascript" src="/scripts/app.js"></script>
+</head>
 
-    <% if (user) { %>
-      <% include navbarLI %>
-        <% } else { %>
-          <% include navbarNL %>
-            <% } %>
+<body>
+  <!-- NAV BAR-->
 
-
-              <!-- Carousel-->
-
-
-              <!--Main COntainer-->
-              <div class="card bg-dark text-white">
-                <img src="<%= item.picurl %>" class="card-img" alt="...">
-                <div class="card-img-overlay" style="bottom: 0;">
-                  <% if(item.sold) { %>
-                    <div style="position: relative; left: 0; top: 0;">
-                      <img src="/images/sold_out_sticker.png" class="img-sold">
-                    </div>
-                    <% } %>
-                      <h5 class="card-title">
-                        <span style="font-weight: bold; color: rgb(255, 255, 255); font-size: 46px;">
-                          <%= item.name %>
-                        </span>
-                      </h5>
-                      <p class="card-text">
-                        <span style="font-weight: bold; color: rgb(255, 252, 252); font-size: 36px;">
-                          <%= item.description %>
-                        </span>
-                      </p>
+  <% if (user) { %>
+    <% include navbarLI %>
+      <% } else { %>
+        <% include navbarNL %>
+          <% } %>
 
 
-                </div>
-
-              </div>
+            <!-- Carousel-->
 
 
-
-
-
-              <div class="card text-center">
-                <div class="card-header">
-                  Featured
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title" style="font-size: 32px; font-weight: bold;">
-                    <%= item.name %>
-                  </h5>
-                  <p class="card-text" style="font-size: 24px; font-weight: bold;">
-                    $<%= item.price %>
-                  </p>
-                  <p class="card-text" style="font-size: 20px;">
-                    <%= item.detailed_description %>
-                  </p>
-                </div>
-
-                <% if (user) { %>
-                  <div class="d-flex justify-content-center">
-                    <form action="/" class="d-inline me-2">
-                      <button type="submit" class="btn btn-primary">Buy</button>
-                    </form>
-                    <form action="/delete/<%= item.id %>" method="GET" class="d-inline me-2">
-                      <button type="submit" class="btn btn-danger">Remove Item</button>
-                    </form>
-                    <a href="/edit/<%= item.id %>" class="d-inline">
-                      <button type="button" class="btn btn-warning">Edit</button>
-                    </a>
-                    <% if(!item.sold) { %>
-
-                      <% if(user.id==item.seller_id || user.admin==true) { %>
-                        <form id="item-sold" action="/itemSold/<%= item.id %>" method="post">
-                          <button type="submit" class="btn btn-success">Mark as sold</button>
-                        </form>
-                        <% } %>
-                          <% } %>
-                            <% if((user.id==item.seller_id || user.admin==true)&& item.sold) { %>
-                              <form id="item-available" action="/itemInStock/<%= item.id %>" method="post">
-                                <button type="submit" class="btn btn-success">Mark as Available</button>
-                              </form>
-                              <% } %>
-
+            <!--Main COntainer-->
+            <div class="card bg-dark text-white">
+              <img src="<%= item.picurl %>" class="card-img" alt="...">
+              <div class="card-img-overlay" style="bottom: 0;">
+                <% if(item.sold) { %>
+                  <div style="position: relative; left: 0; top: 0;">
+                    <img src="/images/sold_out_sticker.png" class="img-sold">
                   </div>
                   <% } %>
-                    <div class="card-footer text-muted">
-                      2 days ago
-                    </div>
-                    <% if (user) { %>
-                      <div class="heart-icon" id="heart-icon-<%= item.id %>">
-                        <i class="fa-solid fa-heart"></i>
-                      </div>
-                      <% } %>
+                    <h5 class="card-title">
+                      <span style="font-weight: bold; color: rgb(255, 255, 255); font-size: 46px;">
+                        <%= item.name %>
+                      </span>
+                    </h5>
+                    <p class="card-text">
+                      <span style="font-weight: bold; color: rgb(255, 252, 252); font-size: 36px;">
+                        <%= item.description %>
+                      </span>
+                    </p>
+
+
               </div>
 
+            </div>
 
 
 
 
 
-              <!-- Include your JavaScript links here -->
-              <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-                integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-                crossorigin="anonymous"></script>
-              <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-                integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-                crossorigin="anonymous"></script>
-              <script>
-                const heartIcons = document.querySelectorAll('.heart-icon');
+            <div class="card text-center">
+              <div class="card-header">
+                Featured
+              </div>
+              <div class="card-body">
+                <h5 class="card-title" style="font-size: 32px; font-weight: bold;">
+                  <%= item.name %>
+                </h5>
+                <p class="card-text" style="font-size: 24px; font-weight: bold;">
+                  $<%= item.price %>
+                </p>
+                <p class="card-text" style="font-size: 20px;">
+                  <%= item.detailed_description %>
+                </p>
+              </div>
 
-                heartIcons.forEach(icon => {
-                  icon.addEventListener('click', () => {
-                    icon.classList.toggle('red-heart'); // Toggle the 'red-heart' class
-                  });
+              <% if (user) { %>
+                <div class="d-flex justify-content-center">
+                  <form action="/" class="d-inline me-2">
+                    <button type="submit" class="btn btn-primary">Buy</button>
+                  </form>
+                  <form action="/delete/<%= item.id %>" method="GET" class="d-inline me-2">
+                    <button type="submit" class="btn btn-danger">Remove Item</button>
+                  </form>
+                  <a href="/edit/<%= item.id %>" class="d-inline">
+                    <button type="button" class="btn btn-warning">Edit</button>
+                  </a>
+                  <% if(!item.sold) { %>
+
+                    <% if(user.id==item.seller_id || user.admin==true) { %>
+                      <form id="item-sold" action="/itemSold/<%= item.id %>" method="post">
+                        <button type="submit" class="btn btn-success">Mark as sold</button>
+                      </form>
+                      <% } %>
+                        <% } %>
+                          <% if((user.id==item.seller_id || user.admin==true)&& item.sold) { %>
+                            <form id="item-available" action="/itemInStock/<%= item.id %>" method="post">
+                              <button type="submit" class="btn btn-success">Mark as Available</button>
+                            </form>
+                            <% } %>
+
+
+                </div>
+                <% } %>
+                  <div class="card-footer text-muted">
+                    2 days ago
+                  </div>
+
+            </div>
+
+
+
+
+
+
+            <!-- Include your JavaScript links here -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+              integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+              crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+              integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+              crossorigin="anonymous"></script>
+            <script>
+              const heartIcons = document.querySelectorAll('.heart-icon');
+
+              heartIcons.forEach(icon => {
+                icon.addEventListener('click', () => {
+                  icon.classList.toggle('red-heart'); // Toggle the 'red-heart' class
                 });
-              </script>
-  </body>
+              });
+            </script>
+</body>
 
 </html>

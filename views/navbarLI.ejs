@@ -16,9 +16,8 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/sell">Sell item</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/message">Message</a>
-        </li>
+
+
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/favorites">Favorites</a>
         </li>
@@ -26,8 +25,9 @@
           <a class="nav-link" href="#">Logged in as: <%= user.username %></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/logout">Logout</a>
-        </li>
+          <form action="/logout" method="post">
+            <button type="submit" class="btn btn-outline-*">Logout</button>
+          </form>
         </li>
       </ul>
     </div>

@@ -62,6 +62,14 @@
                       <div class="card">
                         <img src="<%= item.picurl %>" class="card-img-top" alt="<%= item.name %>">
 
+                        <div class="card-img-overlay" style="bottom: 230px; padding: 0px;">
+                          <% if(item.sold) { %>
+                            <div style="position: relative; left: 0; top: 0;">
+                              <img src="images/sold_out_sticker.png" class="img-sold-card">
+                            </div>
+                            <% } %>
+                        </div>
+
                         <div class="card-body">
                           <h5 class="card-title">
                             <%= item.name %>
