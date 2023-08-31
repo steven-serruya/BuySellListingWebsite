@@ -13,6 +13,7 @@ const app = express();
 const login = require('./routes/login');
 const logout = require('./routes/logout');
 const itemSold = require('./routes/itemSold');
+const itemInStock = require('./routes/itemInStock');
 
 app.set('view engine', 'ejs');
 
@@ -45,6 +46,7 @@ app.use(cookieSession({
 app.use('/login', login);
 app.use('/logout', logout);
 app.use('/itemSold', itemSold);
+app.use('/itemInStock', itemInStock);
 
 // Note: mount other resources here, using the same pattern above
 

@@ -7,7 +7,6 @@ $(document).ready(function() {
 
     const $action = $('#item-sold').attr('action');
     const itemId = $action.slice(10);
-    console.log('item id', itemId);
 
     $.ajax({
       type: 'POST',
@@ -21,4 +20,21 @@ $(document).ready(function() {
     });
   });
 
+  $('#item-available').on('submit', function(event) {
+    event.preventDefault();
+
+    const $action = $('#item-available').attr('action');
+    const itemId = $action.slice(13);
+
+    $.ajax({
+      type: 'POST',
+      url: '/itemInStock',
+      data: { itemId },
+      success: function() {
+        setTimeout(() => {
+          location.reload();
+        }, 1000);
+      }
+    });
+  });
 });

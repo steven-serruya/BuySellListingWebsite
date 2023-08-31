@@ -62,11 +62,10 @@
                       <div class="card">
                         <img src="<%= item.picurl %>" class="card-img-top" alt="<%= item.name %>">
 
-                        <div class="card-img-overlay" style="bottom: 230px;">
+                        <div class="card-img-overlay" style="bottom: 230px; padding: 0px;">
                           <% if(item.sold) { %>
                             <div style="position: relative; left: 0; top: 0;">
-                              <img src="https://i.pinimg.com/474x/a0/46/3f/a0463fb83fab0c14f37b61527c744b9b.jpg"
-                                class="img-sold-card">
+                              <img src="images/sold_out_sticker.png" class="img-sold-card">
                             </div>
                             <% } %>
                         </div>

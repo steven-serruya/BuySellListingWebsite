@@ -7,7 +7,7 @@ router.post('/', (req, res) => {
   const values = [id];
   db.query(`
   UPDATE items
-  SET sold = TRUE
+  SET sold = FALSE
   WHERE id = $1;
   `, values)
     .then(() => {

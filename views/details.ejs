@@ -34,7 +34,7 @@
               <div class="card-img-overlay" style="bottom: 0;">
                 <% if(item.sold) { %>
                   <div style="position: relative; left: 0; top: 0;">
-                    <img src="https://i.pinimg.com/474x/a0/46/3f/a0463fb83fab0c14f37b61527c744b9b.jpg" class="img-sold">
+                    <img src="/images/sold_out_sticker.png" class="img-sold">
                   </div>
                   <% } %>
                     <h5 class="card-title">
@@ -73,12 +73,17 @@
                   <p class="card-text">
                     <a href="#" class="btn btn-primary">Buy</a>
                   </p>
-                  <% if(user.id) { %>
+                  <% if(user.id==item.seller_id || user.admin==true) { %>
                     <form id="item-sold" action="/itemSold/<%= item.id %>" method="post">
                       <button type="submit" class="btn btn-success">Mark as sold</button>
                     </form>
                     <% } %>
                       <% } %>
+                        <% if(user.id==item.seller_id && item.sold) { %>
+                          <form id="item-available" action="/itemInStock/<%= item.id %>" method="post">
+                            <button type="submit" class="btn btn-success">Mark as Available</button>
+                          </form>
+                          <% } %>
               </div>
               <div class="card-footer text-muted">
                 2 days ago
