@@ -20,19 +20,25 @@
               <div class="card bg-dark text-white">
                 <img src="<%= item.picurl %>" class="card-img" alt="...">
                 <div class="card-img-overlay" style="bottom: 0;">
-                  <h5 class="card-title">
-                    <span style="font-weight: bold; color: rgb(255, 255, 255); font-size: 46px;">
-                      <%= item.name %>
-                    </span>
-                  </h5>
-                  <p class="card-text">
-                    <span style="font-weight: bold; color: rgb(255, 252, 252); font-size: 36px;">
-                      <%= item.description %>
-                    </span>
-                  </p>
+                  <% if(item.sold) { %>
+                    <div style="position: relative; left: 0; top: 0;">
+                      <img src="/images/sold_out_sticker.png" class="img-sold">
+                    </div>
+                    <% } %>
+                      <h5 class="card-title">
+                        <span style="font-weight: bold; color: rgb(255, 255, 255); font-size: 46px;">
+                          <%= item.name %>
+                        </span>
+                      </h5>
+                      <p class="card-text">
+                        <span style="font-weight: bold; color: rgb(255, 252, 252); font-size: 36px;">
+                          <%= item.description %>
+                        </span>
+                      </p>
 
 
                 </div>
+
               </div>
 
 
@@ -66,7 +72,19 @@
                     <a href="/edit/<%= item.id %>" class="d-inline">
                       <button type="button" class="btn btn-warning">Edit</button>
                     </a>
+                    <% if(!item.sold) { %>
 
+                      <% if(user.id==item.seller_id || user.admin==true) { %>
+                        <form id="item-sold" action="/itemSold/<%= item.id %>" method="post">
+                          <button type="submit" class="btn btn-success">Mark as sold</button>
+                        </form>
+                        <% } %>
+                          <% } %>
+                            <% if((user.id==item.seller_id || user.admin==true)&& item.sold) { %>
+                              <form id="item-available" action="/itemInStock/<%= item.id %>" method="post">
+                                <button type="submit" class="btn btn-success">Mark as Available</button>
+                              </form>
+                              <% } %>
 
                   </div>
                   <% } %>
