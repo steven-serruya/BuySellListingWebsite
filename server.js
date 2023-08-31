@@ -228,7 +228,6 @@ app.get('/favorites', (req, res) => {
   // Example:
   dbQueries.getFavoriteItems(user.id)
     .then(favoriteItems => {
-      console.log("favorite+++", favoriteItems);
       res.render('favorites.ejs', { user, favoriteItems });
     })
     .catch(error => {
@@ -238,7 +237,6 @@ app.get('/favorites', (req, res) => {
 });
 
 app.post('/add-favorite/:itemId', (req, res) => {
-  console.log("++++++++++");
   const userId = req.session.user.id;
   const itemId = req.params.itemId;
 
