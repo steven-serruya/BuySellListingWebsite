@@ -143,6 +143,27 @@ app.post('/sell', (req, res) => {
       res.status(500).send('Internal Server Error');
     });
 });
+app.get('/delete/:itemId', (req, res) => {
+  const user = req.session.user || null;
+
+  if (!user) {
+    // Redirect to login page or show an error message
+    return res.redirect('/login'); // Replace with your login route
+  }
+
+  const itemId = req.params.itemId;
+
+  // Assuming you have a database function to remove an item by its ID
+  // Replace 'removeItemById' with the actual function to remove the item
+  dbQueries.removeItemById(itemId)
+    .then(() => {
+      res.redirect('/listings'); // Redirect back to the listings page after successful removal
+    })
+    .catch(error => {
+      console.error('Error removing item:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
 
 
 app.get('/logout', (req, res) => {

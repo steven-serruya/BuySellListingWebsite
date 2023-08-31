@@ -43,7 +43,7 @@ const getItemById = (itemId) => {
     });
 };
 
-const removeItem = (itemId) => {
+const removeItemById = (itemId) => {
   return db.query('DELETE FROM items WHERE id = $1;', [itemId])
     .catch(error => {
       throw error;
@@ -95,7 +95,7 @@ module.exports = {
   getUserById,
   getItems,
   getItemById,
-  removeItem,
+  removeItemById,
   getFavorite,
   addFavorite,
   removeFavorite
