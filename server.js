@@ -76,6 +76,7 @@ app.get('/', (req, res) => {
 
 app.get('/details/:id', (req, res) => {
   const itemId = parseInt(req.params.id); // Get the item id from the URL parameter
+  const user = req.session.user || null;
 
   dbQueries.getItemById(itemId) // Fetch item details by id from the database using your queries module
 
@@ -84,11 +85,7 @@ app.get('/details/:id', (req, res) => {
         return res.status(404).send('Item not found');
       }
       console.log("item++++:", item);
-      const templateVars = {
-        user: req.session,
-        items
-      };
-      res.render('details.ejs', templateVars); // Pass the item data to the EJS template
+      res.render('details.ejs', { item, user }); // Pass the item data to the EJS template
     })
     .catch(error => {
       console.error('Error fetching item details:', error);
@@ -102,7 +99,7 @@ app.get('/listings', (req, res) => {
     .then(items => {
       const user = req.session.user || null; // Get the user from session
 
-      res.render('listings', { items, user }); // Render the 'listings.ejs' template with data
+      res.render('listings', { items, user, user }); // Render the 'listings.ejs' template with data
     })
     .catch(error => {
       console.error('Error fetching items:', error);
@@ -112,14 +109,114 @@ app.get('/listings', (req, res) => {
 
 // Add a new route for loading all items
 app.get('/listings/all', (req, res) => {
-  dbQueries.getItems(20) // Fetch the first 12 items from the database using your queries module
+  dbQueries.getItems(30) // Fetch the first 12 items from the database using your queries module
     .then(items => {
       const user = req.session.user || null; // Get the user from session
 
-      res.render('listingsAll', { items }); // Render the 'listingsAll.ejs' template with data
+      res.render('listingsAll', { items, user }); // Render the 'listingsAll.ejs' template with data
     })
     .catch(error => {
       console.error('Error fetching items:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
+
+app.get('/sell', (req, res) => {
+  // Assuming you have the appropriate logic for user authentication
+  const user = req.session.user || null;
+
+  if (!user) {
+    // If user is not logged in, you might want to redirect them to the login page
+    return res.redirect('/login'); // Replace '/login' with your actual login route
+  }
+
+  res.render('addItems.ejs', { user }); // Pass the user variable to the template
+});
+
+app.post('/sell', (req, res) => {
+  // Assuming you have a database module or function to interact with the database
+
+  const name = req.body.itemName;
+  const price = req.body.price;
+  const description = req.body.description;
+  const picurl = req.body.picUrl;
+  const seller_id = req.session.user.id; // Assuming you store user ID in session upon login
+  const detailed_description = req.body.detailed_description;
+  // Insert the item into the database
+  dbQueries.createItem(name, price, picurl, seller_id, description, detailed_description) // Make sure to match the parameters with your query
+    .then(() => {
+      // Redirect to a success page or back to the sell page
+      res.redirect('listings/all'); // Redirect back to the sell page after successful submission
+    })
+    .catch(error => {
+      console.error('Error adding item:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
+app.get('/delete/:itemId', (req, res) => {
+  const user = req.session.user || null;
+
+  if (!user) {
+    // Redirect to login page or show an error message
+    return res.redirect('/login'); // Replace with your login route
+  }
+
+  const itemId = req.params.itemId;
+
+
+  dbQueries.removeItemById(itemId)
+    .then(() => {
+      res.redirect('/listings/all'); // Redirect back to the listings page after successful removal
+    })
+    .catch(error => {
+      console.error('Error removing item:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
+
+
+app.get('/logout', (req, res) => {
+  // Clear the user's session data
+  req.session = null;
+
+  // Redirect to the homepage or login page
+  res.redirect('/');
+});
+app.get('/edit/:itemId', (req, res) => {
+  const user = req.session.user || null;
+  if (!user) {
+    return res.redirect('/login'); // Redirect to login if user is not logged in
+  }
+  const itemId = req.params.itemId;
+  dbQueries.getItemById(itemId)
+    .then((item) => {
+      res.render(`editform`, { item, user }); // Redirect to the item details page after editing
+    })
+    .catch(error => {
+      console.error('Error updating item:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
+app.post('/edit/:itemId', (req, res) => {
+  const user = req.session.user || null;
+
+  if (!user) {
+    return res.redirect('/login'); // Redirect to login if user is not logged in
+  }
+  // console.log(req.body);
+  const itemId = req.params.itemId;
+  const name = req.body.itemName;
+  const price = req.body.price;
+  const description = req.body.description;
+  const picUrl = req.body.picUrl;
+
+  // Update the item's details in the database using your database functions
+  dbQueries.updateItem(itemId, { name, price, description, picUrl })
+    .then(() => {
+      res.redirect(`/listings/all`); // Redirect to the item details page after editing
+    })
+    .catch(error => {
+      console.error('Error updating item:', error);
       res.status(500).send('Internal Server Error');
     });
 });

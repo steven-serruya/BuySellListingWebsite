@@ -14,34 +14,33 @@
 
 
       <!--Main COntainer-->
-      <form method="post" action="/sell">
+      <form method="post" action="/edit/<%= item.id %>">
         <div class="form-group col-md-6 offset-md-1">
           <label for="itemName">Item name</label>
-          <input type="text" class="form-control" id="itemName" name="itemName" placeholder="Item name" required>
+          <input type="text" class="form-control" id="itemName" name="itemName" value="<%= item.name %>" required>
         </div>
         <div class="form-group col-md-6 offset-md-1">
           <label for="price">Price</label>
-          <input type="text" class="form-control" id="price" name="price" placeholder="Price" required>
+          <input type="text" class="form-control" id="price" name="price" value="<%= item.price %>" required>
         </div>
         <div class="form-group col-md-6 offset-md-1">
           <label for="description">Description</label>
-          <input type="text" class="form-control" id="description" name="description" placeholder="Description of item"
+          <input type="text" class="form-control" id="description" name="description" value="<%= item.description %>"
             required>
         </div>
         <div class="form-group col-md-6 offset-md-1">
           <label for="detailed_description">More detailed description</label>
           <input type="text" class="form-control" id="detailed_description" name="detailed_description"
-            placeholder="A more detailed description of item" required>
+            value="<%= item.detailed_description %>" required>
         </div>
         <div class="form-group col-md-6 offset-md-1">
           <label for="picUrl">Pic Url</label>
-          <input type="text" class="form-control" id="picUrl" name="picUrl" placeholder="Add the URL of your picture"
-            required>
+          <input type="text" class="form-control" id="picUrl" name="picUrl" value="<%= item.picurl %>" required>
         </div>
         <div class="form-group">
           <div class="form-check"></div>
         </div>
-        <button type="submit" class="btn btn-primary col-md-6 offset-md-1">Sell Item</button>
+        <button type="submit" class="btn btn-primary col-md-6 offset-md-1" method="POST">Edit Item</button>
       </form>
 
 

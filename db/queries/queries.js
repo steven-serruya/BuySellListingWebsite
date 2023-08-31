@@ -2,8 +2,8 @@ const db = require('../connection');
 
 
 
-const createItem = (name, price, sellerId) => {
-  return db.query('INSERT INTO items(name, price, seller_id) VALUES($1, $2, $3) RETURNING id;', [name, price, sellerId])
+const createItem = (name, price, picurl, seller_id, description, detailed_description) => {
+  return db.query('INSERT INTO items(name, price, picurl, seller_id, description, detailed_description) VALUES($1, $2, $3, $4, $5, $6) RETURNING id;', [name, price, picurl, seller_id, description, detailed_description])
     .then(data => {
       return data.rows[0].id;
     })
@@ -42,8 +42,23 @@ const getItemById = (itemId) => {
       throw error;
     });
 };
+const updateItem = (itemId, updates) => {
+  const updateColumns = Object.keys(updates).map((key, index) => `${key} = $${index + 2}`).join(', ');
+  const values = [itemId, ...Object.values(updates)];
+  const query = `UPDATE items SET ${updateColumns} WHERE id = $1;`;
+  console.log("updates+++", updates);
+  console.log("query+++", query);
+  console.log("values+++", values);
+  return db.query(query, values)
+    .then(() => {
+      return "Item updated successfully";
+    })
+    .catch(error => {
+      throw error;
+    });
+};
 
-const removeItem = (itemId) => {
+const removeItemById = (itemId) => {
   return db.query('DELETE FROM items WHERE id = $1;', [itemId])
     .then(data => {
       return data.rows[0];
@@ -103,14 +118,14 @@ function removeFavorite(userId, itemId) {
 }
 
 module.exports = {
-
   createItem,
   getUserById,
   getItems,
   getItemById,
-  removeItem,
+  removeItemById,
   getFavorite,
   addFavorite,
   removeFavorite,
-  getEmailById
+  getEmailById,
+  updateItem
 };

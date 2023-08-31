@@ -3,83 +3,104 @@
 
 <% include head %>
 
-
   <body>
     <!-- NAV BAR-->
 
-    <% include navbarNL %>
+    <% if (user) { %>
+      <% include navbarLI %>
+        <% } else { %>
+          <% include navbarNL %>
+            <% } %>
 
 
-      <!-- Carousel-->
+              <!-- Carousel-->
 
 
-      <!--Main COntainer-->
-      <div class="card bg-dark text-white">
-        <img src="/<%= item.picurl %>" class="card-img" alt="...">
-        <div class="card-img-overlay" style="bottom: 0;">
-          <h5 class="card-title">
-            <span style="font-weight: bold; color: rgb(255, 255, 255); font-size: 46px;">
-              <%= item.name %>
-            </span>
-          </h5>
-          <p class="card-text">
-            <span style="font-weight: bold; color: rgb(255, 252, 252); font-size: 36px;">
-              <%= item.description %>
-            </span>
-          </p>
-
-        </div>
-      </div>
+              <!--Main COntainer-->
+              <div class="card bg-dark text-white">
+                <img src="<%= item.picurl %>" class="card-img" alt="...">
+                <div class="card-img-overlay" style="bottom: 0;">
+                  <h5 class="card-title">
+                    <span style="font-weight: bold; color: rgb(255, 255, 255); font-size: 46px;">
+                      <%= item.name %>
+                    </span>
+                  </h5>
+                  <p class="card-text">
+                    <span style="font-weight: bold; color: rgb(255, 252, 252); font-size: 36px;">
+                      <%= item.description %>
+                    </span>
+                  </p>
 
 
-
-
-
-      <div class="card text-center">
-        <div class="card-header">
-          Featured
-        </div>
-        <div class="card-body">
-          <h5 class="card-title" style="font-size: 32px; font-weight: bold;">
-            <%= item.name %>
-          </h5>
-          <p class="card-text" style="font-size: 24px; font-weight: bold;">
-            $<%= item.price %>
-          </p>
-          <p class="card-text" style="font-size: 20px;">
-            <%= item.detailed_description %>
-          </p>
-          <a href="#" class="btn btn-primary">Buy</a>
-        </div>
-        <div class="card-footer text-muted">
-          2 days ago
-        </div>
-        <div class="heart-icon" id="heart-icon-<%= item.id %>">
-          <i class="fa-solid fa-heart"></i>
-        </div>
-      </div>
+                </div>
+              </div>
 
 
 
 
 
+              <div class="card text-center">
+                <div class="card-header">
+                  Featured
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title" style="font-size: 32px; font-weight: bold;">
+                    <%= item.name %>
+                  </h5>
+                  <p class="card-text" style="font-size: 24px; font-weight: bold;">
+                    $<%= item.price %>
+                  </p>
+                  <p class="card-text" style="font-size: 20px;">
+                    <%= item.detailed_description %>
+                  </p>
+                </div>
 
-      <!-- Include your JavaScript links here -->
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-        crossorigin="anonymous"></script>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-        crossorigin="anonymous"></script>
-      <script>
-        const heartIcons = document.querySelectorAll('.heart-icon');
+                <% if (user) { %>
+                  <div class="d-flex justify-content-center">
+                    <form action="/" class="d-inline me-2">
+                      <button type="submit" class="btn btn-primary">Buy</button>
+                    </form>
+                    <form action="/delete/<%= item.id %>" method="GET" class="d-inline me-2">
+                      <button type="submit" class="btn btn-danger">Remove Item</button>
+                    </form>
+                    <a href="/edit/<%= item.id %>" class="d-inline">
+                      <button type="button" class="btn btn-warning">Edit</button>
+                    </a>
 
-        heartIcons.forEach(icon => {
-          icon.addEventListener('click', () => {
-            icon.classList.toggle('red-heart'); // Toggle the 'red-heart' class
-          });
-        });
-      </script>
+
+                  </div>
+                  <% } %>
+                    <div class="card-footer text-muted">
+                      2 days ago
+                    </div>
+                    <% if (user) { %>
+                      <div class="heart-icon" id="heart-icon-<%= item.id %>">
+                        <i class="fa-solid fa-heart"></i>
+                      </div>
+                      <% } %>
+              </div>
+
+
+
+
+
+
+              <!-- Include your JavaScript links here -->
+              <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+                crossorigin="anonymous"></script>
+              <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+                crossorigin="anonymous"></script>
+              <script>
+                const heartIcons = document.querySelectorAll('.heart-icon');
+
+                heartIcons.forEach(icon => {
+                  icon.addEventListener('click', () => {
+                    icon.classList.toggle('red-heart'); // Toggle the 'red-heart' class
+                  });
+                });
+              </script>
   </body>
 
 </html>

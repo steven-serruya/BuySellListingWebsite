@@ -74,9 +74,11 @@
                           </p>
                           <a href="/details/<%= item.id %>" class="btn btn-primary">More details</a>
                         </div>
-                        <div class="heart-icon">
-                          <i class="fa-solid fa-heart"></i>
-                        </div>
+                        <% if (user) { %>
+                          <div class="heart-icon" id="heart-icon-<%= item.id %>">
+                            <i class="fa-solid fa-heart"></i>
+                          </div>
+                          <% } %>
                       </div>
                     </div>
                     <% }); %>

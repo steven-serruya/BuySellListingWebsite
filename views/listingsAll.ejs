@@ -16,7 +16,7 @@
                   <% items.forEach(item=> { %>
                     <div class="col-sm-3 mb-3 mb-sm-5">
                       <div class="card" style="width: 18rem;">
-                        <img src="../<%= item.picurl %>" class="card-img-top" alt="<%= item.name %>">
+                        <img src="<%= item.picurl %>" class="card-img-top" alt="<%= item.name %>">
                         <div class="card-body">
                           <h5 class="card-title">
                             <%= item.name %>
@@ -27,9 +27,11 @@
                           <p class="card-text"><strong>$<%= item.price %></strong></p> <!-- Price in bold -->
                           <a href="/details/<%= item.id %>" class="btn btn-primary">More details</a>
                           <!-- Use dynamic link to details page -->
-                          <div class="heart-icon" id="heart-icon-<%= item.id %>">
-                            <i class="fa-solid fa-heart"></i>
-                          </div>
+                          <% if (user) { %>
+                            <div class="heart-icon" id="heart-icon-<%= item.id %>">
+                              <i class="fa-solid fa-heart"></i>
+                            </div>
+                            <% } %>
                         </div>
                       </div>
                     </div>
