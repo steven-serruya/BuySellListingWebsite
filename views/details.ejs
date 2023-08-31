@@ -53,19 +53,31 @@
                   <p class="card-text" style="font-size: 20px;">
                     <%= item.detailed_description %>
                   </p>
-                  <a href="#" class="btn btn-primary">Buy</a>
                 </div>
+
                 <% if (user) { %>
-                  <form action="/delete/<%= item.id %>" method="post">
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                  </form>
+                  <div class="d-flex justify-content-center">
+                    <form action="/" class="d-inline me-2">
+                      <button type="submit" class="btn btn-primary">Buy</button>
+                    </form>
+                    <form action="/delete/<%= item.id %>" method="GET" class="d-inline me-2">
+                      <button type="submit" class="btn btn-danger">Remove Item</button>
+                    </form>
+                    <a href="/edit/<%= item.id %>" class="d-inline">
+                      <button type="button" class="btn btn-warning">Edit</button>
+                    </a>
+
+
+                  </div>
                   <% } %>
                     <div class="card-footer text-muted">
                       2 days ago
                     </div>
-                    <div class="heart-icon" id="heart-icon-<%= item.id %>">
-                      <i class="fa-solid fa-heart"></i>
-                    </div>
+                    <% if (user) { %>
+                      <div class="heart-icon" id="heart-icon-<%= item.id %>">
+                        <i class="fa-solid fa-heart"></i>
+                      </div>
+                      <% } %>
               </div>
 
 

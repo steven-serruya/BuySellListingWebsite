@@ -42,6 +42,21 @@ const getItemById = (itemId) => {
       throw error;
     });
 };
+const updateItem = (itemId, updates) => {
+  const updateColumns = Object.keys(updates).map((key, index) => `${key} = $${index + 2}`).join(', ');
+  const values = [itemId, ...Object.values(updates)];
+  const query = `UPDATE items SET ${updateColumns} WHERE id = $1;`;
+  console.log("updates+++", updates);
+  console.log("query+++", query);
+  console.log("values+++", values);
+  return db.query(query, values)
+    .then(() => {
+      return "Item updated successfully";
+    })
+    .catch(error => {
+      throw error;
+    });
+};
 
 const removeItemById = (itemId) => {
   return db.query('DELETE FROM items WHERE id = $1;', [itemId])
@@ -90,7 +105,6 @@ function removeFavorite(userId, itemId) {
 }
 
 module.exports = {
-
   createItem,
   getUserById,
   getItems,
@@ -98,5 +112,6 @@ module.exports = {
   removeItemById,
   getFavorite,
   addFavorite,
-  removeFavorite
+  removeFavorite,
+  updateItem
 };
