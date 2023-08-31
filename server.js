@@ -126,14 +126,14 @@ app.get('/sell', (req, res) => {
 app.post('/sell', (req, res) => {
   // Assuming you have a database module or function to interact with the database
 
-  const itemName = req.body.itemName;
+  const name = req.body.itemName;
   const price = req.body.price;
   const description = req.body.description;
-  const picUrl = req.body.picUrl;
-  const userId = req.session.user.id; // Assuming you store user ID in session upon login
-
+  const picurl = req.body.picUrl;
+  const seller_id = req.session.user.id; // Assuming you store user ID in session upon login
+  const detailed_description = req.body.detailed_description;
   // Insert the item into the database
-  dbQueries.createItem(itemName, price, picUrl, userId) // Make sure to match the parameters with your query
+  dbQueries.createItem(name, price, picurl, seller_id, description, detailed_description) // Make sure to match the parameters with your query
     .then(() => {
       // Redirect to a success page or back to the sell page
       res.redirect('listings/all'); // Redirect back to the sell page after successful submission
