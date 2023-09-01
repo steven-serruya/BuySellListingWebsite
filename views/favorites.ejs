@@ -17,6 +17,13 @@
                     <div class="col-sm-3 mb-3 mb-sm-5">
                       <div class="card" style="width: 18rem;">
                         <img src="<%= fav.picurl %>" class="card-img-top" alt="<%= fav.name %>">
+                        <div class="card-img-overlay" style="bottom: 230px; padding: 0px;">
+                          <% if(fav.sold) { %>
+                            <div style="position: relative; left: 0; top: 0;">
+                              <img src="images/sold_out_sticker.png" class="img-sold-card">
+                            </div>
+                            <% } %>
+                        </div>
                         <div class="card-body">
                           <h5 class="card-title">
                             <%= fav.name %>

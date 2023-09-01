@@ -14,6 +14,7 @@ const login = require('./routes/login');
 const logout = require('./routes/logout');
 const itemSold = require('./routes/itemSold');
 const itemInStock = require('./routes/itemInStock');
+const search = require('./routes/search');
 
 app.set('view engine', 'ejs');
 
@@ -47,6 +48,7 @@ app.use('/login', login);
 app.use('/logout', logout);
 app.use('/itemSold', itemSold);
 app.use('/itemInStock', itemInStock);
+app.use('/search', search);
 
 // Note: mount other resources here, using the same pattern above
 
