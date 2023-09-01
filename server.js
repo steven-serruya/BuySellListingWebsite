@@ -12,6 +12,8 @@ const PORT = process.env.PORT || 8060;
 const app = express();
 const login = require('./routes/login');
 const logout = require('./routes/logout');
+const itemSold = require('./routes/itemSold');
+const itemInStock = require('./routes/itemInStock');
 
 app.set('view engine', 'ejs');
 
@@ -43,6 +45,8 @@ app.use(cookieSession({
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
 app.use('/login', login);
 app.use('/logout', logout);
+app.use('/itemSold', itemSold);
+app.use('/itemInStock', itemInStock);
 
 // Note: mount other resources here, using the same pattern above
 
@@ -66,7 +70,6 @@ app.get('/', (req, res) => {
   const user = req.session.user || null;
   dbQueries.getItems(6) // Fetch items from the database using your queries module
     .then(items => {
-      console.log("user+++", user);
       res.render('index.ejs', { items, user }); // Pass the items data to the EJS template
 
     })
@@ -75,6 +78,57 @@ app.get('/', (req, res) => {
       res.status(500).send('Internal Server Error');
     });
 
+});
+
+app.get('/details/:id', (req, res) => {
+  const itemId = parseInt(req.params.id); // Get the item id from the URL parameter
+  const user = req.session.user || null;
+  const email = req.session.user.email;
+
+
+  dbQueries.getItemById(itemId) // Fetch item details by id from the database using your queries module
+
+    .then(item => {
+      if (!item) {
+        return res.status(404).send('Item not found');
+      }
+      const user = req.session.user || null;
+      res.render('details.ejs', { item, user, email }); // Pass the item data to the EJS template
+    })
+    .catch(error => {
+      console.error('Error fetching item details:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
+
+
+app.get('/listings', (req, res) => {
+  dbQueries.getItems(12) // Fetch the first 12 items from the database using your queries module
+    .then(items => {
+      const user = req.session.user || null; // Get the user from session
+
+      res.render('listings', { items, user }); // Render the 'listings.ejs' template with data
+    })
+    .catch(error => {
+      console.error('Error fetching items:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
+
+// Add a new route for loading all items
+app.get('/listings/all', (req, res) => {
+  dbQueries.getItems(30) // Fetch the first 12 items from the database using your queries module
+    .then(items => {
+      console.log('items++++', items);
+      const user = req.session.user || null; // Get the user from session
+
+      res.render('listingsAll', { items, user }); // Render the 'listingsAll.ejs' template with data
+      res.render('listingsAll', { items, user }); // Render the 'listingsAll.ejs' template with data
+    })
+    .catch(error => {
+      console.error('Error fetching items:', error);
+      res.status(500).send('Internal Server Error');
+    });
 });
 
 app.get('/sell', (req, res) => {
