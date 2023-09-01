@@ -32,7 +32,6 @@
             <!--Main COntainer-->
             <div class="card bg-dark text-white">
               <img src="<%= item.picurl %>" class="card-img" alt="...">
-              <img src="<%= item.picurl %>" class="card-img" alt="...">
               <div class="card-img-overlay" style="bottom: 0;">
                 <% if(item.sold) { %>
                   <div style="position: relative; left: 0; top: 0;">
@@ -133,38 +132,34 @@
                 </div>
 
                 </div>
-                <% } %>
-                  <div class="card-footer text-muted">
-                    2 days ago
+                <% if (user) { %>
+                  <div class="heart-icon" id="heart-icon-<%= item.id %>">
+                    <i class="fa-solid fa-heart"></i>
                   </div>
-                  <% if (user) { %>
-                    <div class="heart-icon" id="heart-icon-<%= item.id %>">
-                      <i class="fa-solid fa-heart"></i>
+                  <% } %>
                     </div>
-                    <% } %>
-                      </div>
 
 
 
 
 
 
-                      <!-- Include your JavaScript links here -->
-                      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-                        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-                        crossorigin="anonymous"></script>
-                      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-                        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-                        crossorigin="anonymous"></script>
-                      <script>
-                        const heartIcons = document.querySelectorAll('.heart-icon');
+                    <!-- Include your JavaScript links here -->
+                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+                      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+                      crossorigin="anonymous"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+                      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+                      crossorigin="anonymous"></script>
+                    <script>
+                      const heartIcons = document.querySelectorAll('.heart-icon');
 
-                        heartIcons.forEach(icon => {
-                          icon.addEventListener('click', () => {
-                            icon.classList.toggle('red-heart'); // Toggle the 'red-heart' class
-                          });
+                      heartIcons.forEach(icon => {
+                        icon.addEventListener('click', () => {
+                          icon.classList.toggle('red-heart'); // Toggle the 'red-heart' class
                         });
-                      </script>
+                      });
+                    </script>
 </body>
 
 </html>
