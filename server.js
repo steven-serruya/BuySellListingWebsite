@@ -74,7 +74,6 @@ app.get('/', (req, res) => {
 app.get('/details/:id', (req, res) => {
   const itemId = parseInt(req.params.id); // Get the item id from the URL parameter
   const user = req.session.user || null;
-  const email = req.session.user.email;
 
 
   dbQueries.getItemById(itemId) // Fetch item details by id from the database using your queries module
@@ -84,7 +83,7 @@ app.get('/details/:id', (req, res) => {
         return res.status(404).send('Item not found');
       }
       const user = req.session.user || null;
-      res.render('details.ejs', { item, user, email }); // Pass the item data to the EJS template
+      res.render('details.ejs', { item, user }); // Pass the item data to the EJS template
     })
     .catch(error => {
       console.error('Error fetching item details:', error);

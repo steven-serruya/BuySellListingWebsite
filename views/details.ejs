@@ -83,7 +83,7 @@
                 </form>
                 <form class="d-inline me-2">
                   <button type="button" class="btn btn-info "
-                    onclick="location.href='mailto:<%= email %>?&subject=Product%20Enquiry&body=Hello%20I%20am%20Interested%20in%20<%= item.name %>';">Send
+                    onclick="location.href='mailto:<%= user.email %>?&subject=Product%20Enquiry&body=Hello%20I%20am%20Interested%20in%20<%= item.name %>';">Send
                     Mail</button>
 
                 </form>
@@ -118,7 +118,7 @@
 
               </div>
               <% } %>
-                <div class="card-footer text-muted">
+                <div class="card-footer text-muted text-center">
                   <script defer>
                     const element = document.querySelector('.card-footer');
                     element.textContent = timeago.format(new Date(), 'en_US');
