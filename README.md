@@ -79,11 +79,18 @@ startpostgres
 - Start your node server
 - Browse to http://localhost:8060/
 - Login as below users and start buying/selling products
-    - user1.example.com(Admin)
-    - user2.example.com
-    - user3.example.com
-    - user4.example.com
-    - user5.example.com
+- Users can edit any items that they post
+- Admins can edit all items
+    - Email: user1.example.com(Admin),
+        Password: password
+    - Email: user2.example.com,
+        Password: password
+    - Email: user3.example.com,
+        Password: password
+    - Email: user4.example.com,
+        Password: password
+    - Email: user5.example.com,
+        Password: password
 
 ## Contributions
 
