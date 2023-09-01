@@ -37,6 +37,9 @@ Here are some screenshots of different pages and features within the Greg's List
 ##### Full Listing with sold out products
 ![](./public/images/screenshots/fullListingsWithSoldOut.png)
 
+##### Full listing can be filtered by price
+![](public/images/screenshots/filterbyprice.png)
+
 ## Dependencies
 
 - Node.js
@@ -63,10 +66,12 @@ Here are some screenshots of different pages and features within the Greg's List
     - password: labber
     - database: midterm
 3. Install all dependencies (using the npm install command).
-4. Fix to binaries for sass: npm rebuild node-sass
-5. Reset database: npm run db:reset
+4.  Start PostgreSQL 10 database server: 
+startpostgres
+5. Fix to binaries for sass: npm rebuild node-sass
+6. Reset database: npm run db:reset
     - Check the db folder to see what gets created and seeded in the SDB
-6. Run the server: npm run local
+7. Run the server: npm run local
 
 
 ## How to use the app
