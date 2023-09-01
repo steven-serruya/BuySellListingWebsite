@@ -2,28 +2,31 @@
 Greg's List is a full stack web application built with Node and express to Buy and Sell your favourite products via different listings!(like craig's list or kijiji)
 
 ## Final Product
-Featured Listings Page
+##### Login Page
+![](./public/images/screenshots/loginPage.png)
+
+##### Featured Listings Page
 ![](./public/images/screenshots/featuredListings.png)
 
-Full Listings Page
+##### Full Listings Page
 ![](./public/images/screenshots/fullListings.png)
 
-Individual product details 
+##### Individual product details 
 ![](./public/images/screenshots/productDetails.png)
 
-Sell Items Page
+##### Sell Items Page
 ![](./public/images/screenshots/sellItems.png)
 
-Favorites Page
+##### Favorites Page
 ![](./public/images/screenshots/favorites.png)
 
-Send email button triggering the email
+##### Send email button triggering the email
 ![](./public/images/screenshots/emailTrigger.png)
 
-Individual sold out product
+##### Individual sold out product
 ![](./public/images/screenshots/soldOutProducts.png)
 
-Full Listing with sold out products
+##### Full Listing with sold out products
 ![](./public/images/screenshots/fullListingsWithSoldOut.png)
 
 ## Dependencies
