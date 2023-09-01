@@ -13,6 +13,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script type="text/javascript" src="/scripts/searchScript.js"></script>
 </head>
+
 <body>
   <!-- NAV BAR-->
 
@@ -23,33 +24,39 @@
           <% } %>
 
 
-      <!-- Carousel-->
+            <!-- Carousel-->
             <!--Main COntainer-->
             <div class="container">
               <form id="search" action="/search" method="post">
-                <div class="input-group">
-                  <div class="form-outline">
-                    <input name="search" type="search" id="form1" class="form-control" />
+                <div class="row g-3 align-items-center justify-content-center mb-3">
+                  <div class="col-auto" style="margin-bottom: 16px;">
                     <label class="form-label" for="form1">Search</label>
                   </div>
-                  <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-search"></i>
-                  </button>
-                  <select name="sort" class="form-select" aria-label="Default select example">
-                    <option value="1">Price Ascending</option>
-                    <option value="2">Price Descending</option>
-                    <option value="3">Date Ascending</option>
-                    <option value="4">Date Descending</option>
-                  </select>
+                  <div class="col-auto" style="margin-bottom: 16px;">
+                    <input name="search" type="search" id="form1" class="form-control" />
+                  </div>
+                  <div class="col-auto" style="margin-bottom: 16px;">
+                    <select name="sort" class="form-select" aria-label="Default select example">
+                      <option value="1">Price Ascending</option>
+                      <option value="2">Price Descending</option>
+                      <option value="3">Date Ascending</option>
+                      <option value="4">Date Descending</option>
+                    </select>
+                  </div>
+                  <div class="col-auto" style="margin-bottom: 16px;">
+                    <button type="submit" class="btn btn-primary">
+                      <i class="fas fa-search"></i>
+                    </button>
+                  </div>
                 </div>
               </form>
 
-              <div class="row">
+              <div class="row search-card">
                 <% items.forEach(item=> { %>
                   <div class="col-sm-3 mb-3 mb-sm-5">
                     <div class="card" style="width: 18rem;">
                       <img src="<%= item.picurl %>" class="card-img-top" alt="<%= item.name %>">
-      <!--Main COntainer-->
+                      <!--Main COntainer-->
                       <div class="card-img-overlay" style="bottom: 230px; padding: 0px;">
                         <% if(item.sold) { %>
                           <div style="position: relative; left: 0; top: 0;">
