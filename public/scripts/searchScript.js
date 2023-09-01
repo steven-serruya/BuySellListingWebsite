@@ -10,6 +10,12 @@ $(document).ready(function() {
     }
   };
 
+  const escape = function(str) {
+    let div = document.createElement("div");
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+  };
+
   const createCardElement = function(item, user) {
 
     let card = `
@@ -28,12 +34,12 @@ $(document).ready(function() {
           </div>
           <div class="card-body">
             <h5 class="card-title">
-              ${item.name}
+              ${escape(item.name)}
             </h5>
             <p class="card-text">
-              ${item.description}
+              ${escape(item.description)}
             </p>
-            <p class="card-text"><strong>$${item.price}</strong></p> <!-- Price in bold -->
+            <p class="card-text"><strong>$${escape(item.price)}</strong></p> <!-- Price in bold -->
             <a href="/details/${item.id}" class="btn btn-primary">More details</a>
             <!-- Use dynamic link to details page --> `;
 
