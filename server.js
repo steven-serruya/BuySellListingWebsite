@@ -57,13 +57,13 @@ app.use('/itemInStock', itemInStock);
 // Separated Routes for each Resource
 const listings = require('./routes/listings');
 const listingDetails = require('./routes/details');
-const contact = require('./routes/contact');
+
 
 // Mount the resource routes
 app.use('/listings', listings);
 app.use('/listings/all', listings);
 app.use('/:id', listingDetails);
-app.use('/message', contact);
+
 
 app.get('/', (req, res) => {
   //get the user from session
