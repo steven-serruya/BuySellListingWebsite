@@ -12,6 +12,8 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script type="text/javascript" src="/scripts/app.js"></script>
+  <script src="/vendor/timeago.min.js"></script>
+
 </head>
 
 <body>
@@ -80,9 +82,14 @@
                   <form action="/delete/<%= item.id %>" method="GET" class="d-inline me-2">
                     <button type="submit" class="btn btn-danger">Remove Item</button>
                   </form>
-                  <a href="/edit/<%= item.id %>" class="d-inline">
-                    <button type="button" class="btn btn-warning">Edit</button>
-                  </a>
+                  <div>
+
+                    <a href="/edit/<%= item.id %>" class="d-inline me-2">
+                      <button type="button" class="btn btn-warning">Edit</button>
+                    </a>
+
+
+                  </div>
                   <% if(!item.sold) { %>
 
                     <% if(user.id==item.seller_id || user.admin==true) { %>
@@ -101,7 +108,16 @@
                 </div>
                 <% } %>
                   <div class="card-footer text-muted">
-                    2 days ago
+                    <script defer>
+                      const element = document.querySelector('.card-footer');
+                      element.textContent = timeago.format(new Date(), 'en_US');
+                      // const timeAgoInstance = new TimeAgo('en'); // Pass the language pack
+
+                      // Use the timeAgoInstance to format dates
+                      // const timeAgoFormatted = timeAgoInstance.format('2016-06-12', 'en_US'); // Example usage
+                      // console.log(timeAgoFormatted)
+                    </script>
+
                   </div>
 
             </div>
