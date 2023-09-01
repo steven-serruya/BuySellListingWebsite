@@ -2,11 +2,11 @@
 $(document).ready(function() {
 
   const renderItems = function(items, user) {
-    $('.row').empty();
+    $('.search-card').empty();
 
     for (let item of items) {
       const card = createCardElement(item, user);
-      $('.row').append(card);
+      $('.search-card').append(card);
     }
   };
 
