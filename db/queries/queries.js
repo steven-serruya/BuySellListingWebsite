@@ -49,9 +49,7 @@ const updateItem = (itemId, updates) => {
   const updateColumns = Object.keys(updates).map((key, index) => `${key} = $${index + 2}`).join(', ');
   const values = [itemId, ...Object.values(updates)];
   const query = `UPDATE items SET ${updateColumns} WHERE id = $1;`;
-  console.log("updates+++", updates);
-  console.log("query+++", query);
-  console.log("values+++", values);
+
   return db.query(query, values)
     .then(() => {
       return "Item updated successfully";
@@ -97,11 +95,9 @@ function addFavorite(userId, itemId) {
 
 // Remove item from favorites
 function removeFavorite(userId, itemId) {
-  console.log("userId------", userId);
-  console.log("itemId------", itemId);
+
   return new Promise((resolve, reject) => {
     db.query('DELETE FROM favorite_items WHERE user_id = $1 AND item_id = $2', [userId, itemId], (error, result) => {
-      console.log("results------", result);
       if (error) {
         reject(error);
       } else {
