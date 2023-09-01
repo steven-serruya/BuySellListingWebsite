@@ -14,7 +14,7 @@ const login = require('./routes/login');
 const logout = require('./routes/logout');
 const itemSold = require('./routes/itemSold');
 const itemInStock = require('./routes/itemInStock');
-
+const search = require('./routes/search');
 app.set('view engine', 'ejs');
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
@@ -36,6 +36,7 @@ app.use(cookieSession({
   keys: ["fghujkahjksflkj"],
   maxAge: 24 * 60 * 60 * 1000
 }));
+app.use('/search', search);
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
 
@@ -80,7 +81,7 @@ app.get('/details/:id', (req, res) => {
         return res.status(404).send('Item not found');
       }
       const user = req.session.user || null;
-      res.render('details.ejs', { item, user}); // Pass the item data to the EJS template
+      res.render('details.ejs', { item, user }); // Pass the item data to the EJS template
     })
     .catch(error => {
       console.error('Error fetching item details:', error);
