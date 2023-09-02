@@ -1,70 +1,103 @@
-# Buy-Sell Listing Website
+# Midterm Buy/Sell Website Project
+Greg's List is a full stack web application built with Node and express to Buy and Sell your favourite products via different listings!(like craig's list or kijiji)
 
-Welcome to the Buy-Sell Listing Website project! This is a web application that allows users to buy and sell items online.
+## Project Overview
 
-## Table of Contents
-
-- [Features](#features)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-- [Usage](#usage)
-- [Technologies Used](#technologies-used)
-- [Contributing](#contributing)
-- [License](#license)
-
-## Features
-
-- User authentication and session management
-- Browse available listings
-- Add items for sale
-- Edit and delete items (for logged-in users)
-- Mark items as favorites
-- Responsive design for various devices
-- ...
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js and npm: Make sure you have Node.js and npm installed on your system. You can download them from [here](https://nodejs.org/).
-
-### Installation
-
-1. Clone the repository:
-git clone https://github.com/steven-serruya/BuySellListingWebsite
-
-2. Navigate to the project directory:
-cd BuySellListingWebsite
-
-3. Install the dependencies:
-npm install
+The main objective of Greg's List is to provide a platform for users to engage in buying and selling activities. The application offers a range of features to facilitate these interactions, including user authentication, listing creation, product details, favoriting items, and communication through email.
 
 
-## Usage
+## Screenshots
 
-1. Start the server:
-npm start
+Here are some screenshots of different pages and features within the Greg's List application:
 
-2. Open your web browser and visit `http://localhost:8060` to access the website.
+##### Login Page
+![](./public/images/screenshots/loginPage.png)
 
-## Technologies Used
+##### Featured Listings Page
+![](./public/images/screenshots/featuredListings.png)
+
+##### Full Listings Page
+![](./public/images/screenshots/fullListings.png)
+
+##### Individual product details 
+![](./public/images/screenshots/productDetails.png)
+
+##### Sell Items Page
+![](./public/images/screenshots/sellItems.png)
+
+##### Favorites Page
+![](./public/images/screenshots/favorites.png)
+
+##### Send email button triggering the email
+![](./public/images/screenshots/emailTrigger.png)
+
+##### Individual sold out product
+![](./public/images/screenshots/soldOutProducts.png)
+
+##### Full Listing with sold out products
+![](./public/images/screenshots/fullListingsWithSoldOut.png)
+
+##### Full listing can be filtered by price
+![](public/images/screenshots/filterbyprice.png)
+
+## Dependencies
 
 - Node.js
-- Express.js
-- EJS (Embedded JavaScript) templates
-- PostgreSQL (or your preferred database)
-- Bootstrap for styling
-- ...
+- bcryptjs
+- bootstrap
+- chalk
+- cookie-session
+- dotenv
+- EJS
+- express
+- morgan"
+- pg
+- sass
+- timeago.js
 
-## Contributing
+## Dev Dependencies:
+- Nodemon
 
-Contributions are welcome! If you'd like to contribute to this project, feel free to submit a pull request.
+## Getting Started
+1. Clone this repo and Create the .env by using .env.example as a reference: 
+    - cp .env.example .env
+2. Update the .env file with your correct local information
+    - username: labber
+    - password: labber
+    - database: midterm
+3. Install all dependencies (using the npm install command).
+4.  Start PostgreSQL 10 database server: 
+startpostgres
+5. Fix to binaries for sass: npm rebuild node-sass
+6. Reset database: npm run db:reset
+    - Check the db folder to see what gets created and seeded in the SDB
+7. Run the server: npm run local
 
-1. Fork the project.
-2. Create your feature branch (`git checkout -b feature/your-feature-name`).
-3. Commit your changes (`git commit -m 'Add some feature'`).
-4. Push to the branch (`git push origin feature/your-feature-name`).
-5. Create a new Pull Request.
 
-## License
+## How to use the app
+
+- Start your node server
+- Browse to http://localhost:8060/
+- Login as below users and start buying/selling products
+- Users can edit any items that they post
+- Admins can edit all items
+    - Email: user1.example.com(Admin),
+        Password: password
+    - Email: user2.example.com,
+        Password: password
+    - Email: user3.example.com,
+        Password: password
+    - Email: user4.example.com,
+        Password: password
+    - Email: user5.example.com,
+        Password: password
+
+## Contributions
+
+- Chandani Kumari
+- Noah McMillan
+- Steven Serruya
+
+
+
+Enjoy!
